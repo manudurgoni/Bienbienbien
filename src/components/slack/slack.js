@@ -1,25 +1,46 @@
 'use strict';
 
+var api = require('./tk');
+
+var apiURL = 'https://slack.com/api/channels.history?token='+api.tk+'&channel=C024YKWRU';
+
 module.exports = {
-    inherit: true,
-    replace: true,
-    template: require('./header.html'),
+  inherit: true,
+  replace: true,
+  template: require('./slack.html'),
 
-    data: function() {
-      return {
+  data: function() {
+    return {
+      msgs: null
+    };
+  },
 
-      };
-    },
+  created: function(){
+    this.fetchData();
+    console.log('created');
 
-    ready: function() {
+  },
 
-    },
+  ready: function() {
 
-    beforeDestroy: function() {
+  },
 
-    },
+  beforeDestroy: function() {
 
-    methods: {
+  },
 
+  methods: {
+    fetchData: function() {
+      var xhr = new XMLHttpRequest()
+      var self = this
+      xhr.open('GET', apiURL)
+      xhr.onload = function() {
+        console.log(self);
+        var json = JSON.parse(xhr.responseText);
+        self.msgs = json.messages;
+        console.log(self.msgs)
+      }
+      xhr.send()
     }
+  }
 };

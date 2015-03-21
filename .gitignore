@@ -3,3 +3,4 @@
 node_modules/
 build/
 wordpress/
+src/components/slack/tk.js

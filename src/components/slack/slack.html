@@ -1,3 +1,16 @@
-<header class="header">
-	<h1>Fucking header</h1>
-</header>
+<aside class="slack-component">
+	<h1>Slack</h1>
+
+	<ul class="messages">
+		<li v-repeat="msgs" class="msg-{{$index}}">
+			<div v-if="!attachments">
+      	{{text}}
+			</div>
+
+      <div v-if="attachments">
+      	attachements
+      </div>
+    </li>
+    
+	</ul>
+</aside>

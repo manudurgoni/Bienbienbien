@@ -40,7 +40,7 @@ function init() {
 
         components: {
             /* COMPONENTs */
-            'header-component': require('../components/header/header'),
+            'slack-component': require('../components/slack/slack'),
 
             /* SECTIONS */
             'home-section': require('../sections/home/home'),
