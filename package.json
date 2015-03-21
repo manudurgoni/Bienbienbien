@@ -1,0 +1,86 @@
+{
+  "name": "patchwork-boilerplate",
+  "version": "1.1.0",
+  "description": "Patchwork is a mix between a boilerplate and a miniframework built on top of Vue.js. It allows to quickly build prototypes or websites using gulp, sass, vue.js and GSAP.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/ayamflow/patchwork"
+  },
+  "keywords": [
+    "boilerplate",
+    "gulp",
+    "sass",
+    "scss",
+    "starter",
+    "vue.js"
+  ],
+  "author": "= <=>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ayamflow/patchwork/issues"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim",
+      "html-browserify"
+    ]
+  },
+  "browser": {
+    "fit": "./node_modules/fit/fit.min.js",
+    "forEach": "./node_modules/foreach.js/dist/foreach.min.js",
+    "preloadjs": "./node_modules/preloadjs/lib/preloadjs-0.4.1.min.js",
+    "TweenMax": "./node_modules/greensock/src/minified/TweenMax.min.js"
+  },
+  "browserify-shim": {
+    "fit": "fit",
+    "forEach": "forEach",
+    "preloadjs": "preloadjs",
+    "TweenMax": "TweenMax"
+  },
+  "napa": {
+    "fit": "soulwire/fit.js",
+    "foreach.js": "toddmotto/foreach",
+    "greensock": "greensock/GreenSock-JS",
+    "preloadjs": "CreateJS/PreloadJS"
+  },
+  "devDependencies": {
+    "browser-sync": "^1.7.2",
+    "browserify": "*",
+    "browserify-shim": "*",
+    "debounce": "*",
+    "del": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "0.0.8",
+    "gulp-copy": "0.0.2",
+    "gulp-jshint": "^1.8.2",
+    "gulp-minify-css": "~0.3.8",
+    "gulp-notify": "^1.4.0",
+    "gulp-plumber": "*",
+    "gulp-sass": "*",
+    "gulp-streamify": "0.0.5",
+    "gulp-uglify": "*",
+    "gulp-util": "^3.0.0",
+    "html-browserify": "*",
+    "jshint-stylish": "*",
+    "napa": "*",
+    "pretty-hrtime": "*",
+    "remapify": "*",
+    "vinyl-source-stream": "*",
+    "watchify": "*",
+    "yargs": "*"
+  },
+  "dependencies": {
+    "bindall-standalone": "~1.0.5",
+    "extend": "*",
+    "page": "~1.3.7",
+    "superagent": "~0.18.1",
+    "vue": "^0.11.3",
+    "vue-route": "^1.2.0",
+    "windowsill": "^1.0.6",
+    "vue-resize-mixin": "^1.0.1"
+  },
+  "scripts": {
+    "install": "napa"
+  }
+}
