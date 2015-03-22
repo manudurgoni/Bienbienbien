@@ -1,10 +1,9 @@
-<div class="section" v-transition="fade">
+<div class="section" v-transition="appear" wait-for="data-loaded">
   <article>
     <h1>{{{ post.title }}}</h1>
     <h2>{{{ post.custom_fields.surtitre }}}</h2>
 
     <div class="content">
-    	{{{ post.content }}}
     </div>
   </article>
 </div>

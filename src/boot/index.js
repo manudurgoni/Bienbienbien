@@ -19,7 +19,9 @@ var DataManager = require('../utils/data-manager');
 
 var get_posts_url = 'http://wp.bienbienbien.dev/api/get_posts/';
 var api = require('../components/slack/tk');
-var get_slack_posts = 'https://slack.com/api/channels.history?token='+api.tk+'&channel=C024YKWRU';
+var get_slack_posts = 'https://slack.com/api/channels.history?token=' + api.tk + '&channel=C024YKWRU';
+var datas = {};
+
 
 /*
     Plugins, lib config...
@@ -31,8 +33,8 @@ function init() {
     el: 'body',
     data: function() {
       return {
-        posts: null,
-        msgs:null
+        posts: datas.posts,
+        msgs: datas.msgs
       };
     },
 
@@ -60,27 +62,21 @@ function init() {
     },
 
     created: function() {
-      this.fetchData();
     },
 
     ready: function() {
-
     },
 
     methods: {
-      fetchData: function() {
-        var self = this;
-
-
-        DataManager.getJsons([get_posts_url, get_slack_posts]).then(function(response){
-          console.log("loading done");
-          self.posts = response[0].posts;
-          self.msgs = response[1].messages;
-        });
-        
-      }
     }
   });
 }
 
-window.onload = init;
+window.onload = function() {
+  DataManager.getJsons([get_posts_url, get_slack_posts]).then(function(response) {
+    datas.posts = response[0].posts;
+    datas.msgs = response[1].messages;
+
+    init();
+  });
+};
