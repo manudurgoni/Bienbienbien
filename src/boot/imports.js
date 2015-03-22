@@ -77,4 +77,4 @@ Vue.transition('fade', {
         //     $(el).stop()
         // }
     }
-})
+});

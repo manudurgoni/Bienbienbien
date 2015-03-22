@@ -2,36 +2,27 @@
 
 var TweenMax = require('TweenMax');
 
+
+
 module.exports = {
-    inherit: true,
-    replace: true,
-    template: require('./home.html'),
+  inherit: true,
+  replace: true,
+  template: require('./home.html'),
 
-    data: function() {
-      return {
-        posts:[{
-            "title":"hello"
-        },{
-            "title":"Hey dude!"
-        }]
-      };
-    },
+  data: function() {
+    return {
+    };
+  },
 
-    ready: function() {
-        // console.log('home is ready');
-        console.log(this);
+  created: function() {
+    // this.fetchData();
+  },
 
-        
+  ready: function() {},
 
-    },
+  beforeDestroy: function() {},
 
-    beforeDestroy: function() {
-        console.log('kill home');
-
-        // tlHome.reverse();
-    },
-
-    methods: {
-
-    }
+  methods: {
+    
+  }
 };

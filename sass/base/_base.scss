@@ -35,13 +35,16 @@ ul, li {
 
 .global{
     width: 100%;
-    height: 300%;
+    height: 100%;
     margin-left: 300px;
     background-color: red;
+    overflow: auto;
 
 }
 
 
 .section{
     position: absolute;
+    width: 100%;
+    background-color: red;
 }

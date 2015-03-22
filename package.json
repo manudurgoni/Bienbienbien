@@ -29,7 +29,7 @@
   "browser": {
     "fit": "./node_modules/fit/fit.min.js",
     "forEach": "./node_modules/foreach.js/dist/foreach.min.js",
-    "preloadjs": "./node_modules/preloadjs/lib/preloadjs-0.4.1.min.js",
+    "preloadjs": "./node_modules/preloadjs/lib/preloadjs-0.6.0.min.js",
     "TweenMax": "./node_modules/greensock/src/minified/TweenMax.min.js"
   },
   "browserify-shim": {
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "browser-sync": "^1.7.2",
-    "browserify": "*",
+    "browserify": "5.9.1",
     "browserify-shim": "*",
     "debounce": "*",
     "del": "*",
@@ -65,7 +65,7 @@
     "jshint-stylish": "*",
     "napa": "*",
     "pretty-hrtime": "*",
-    "remapify": "*",
+    "remapify": "1.3.0",
     "vinyl-source-stream": "*",
     "watchify": "*",
     "yargs": "*"
@@ -74,11 +74,12 @@
     "bindall-standalone": "~1.0.5",
     "extend": "*",
     "page": "~1.3.7",
+    "q": "^1.2.0",
     "superagent": "~0.18.1",
     "vue": "^0.11.3",
+    "vue-resize-mixin": "^1.0.1",
     "vue-route": "^1.2.0",
-    "windowsill": "^1.0.6",
-    "vue-resize-mixin": "^1.0.1"
+    "windowsill": "^1.0.6"
   },
   "scripts": {
     "install": "napa"

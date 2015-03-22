@@ -1,9 +1,9 @@
-
 <div class="section" v-transition="fade">
-    <h2>Patchwork</h2>
-    <p>Looks like it's working - <a href="/about">about</a></p>
-    
-    <li v-repeat="posts" class="post-{{$index}}">
-        {{$index}} - {{title}}
-    </li>
+	
+	<article v-repeat="posts" class="post-{{id}}">
+		<a href="/article/{{slug}}">
+			{{{ title }}}
+		</a>
+	</article>
+
 </div>
