@@ -19,11 +19,12 @@ var forEach = require('forEach');
 var DataManager = require('../utils/data-manager');
 
 //Wordpress
-var get_posts_url = 'http://wp.bienbienbien.dev/api/get_posts/';
+var wp_url = 'http://192.168.1.158/bienbienbien/wordpress'
+var get_posts_url = wp_url + '/api/get_posts/';
 
 //Slack
-var get_slack_posts = 'http://wp.bienbienbien.dev/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
-var get_slack_members = 'http://wp.bienbienbien.dev/wp-admin/admin-ajax.php?action=get_all_members';
+var get_slack_posts = wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
+var get_slack_members = wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
 var datas = {};
 
 
