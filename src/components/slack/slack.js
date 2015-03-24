@@ -1,7 +1,6 @@
 'use strict';
 
-var DataManager = require('../../utils/data-manager');
-
+var TweenMax = require('TweenMax');
 
 
 module.exports = {
@@ -16,10 +15,23 @@ module.exports = {
   },
 
   created: function(){
-
   },
 
   ready: function() {
+
+    var msgs = this.$el.querySelectorAll('li.msg');
+    var tl = new TimelineMax();
+
+    tl.set(msgs,{
+      autoAlpha:0,
+      x:-30
+    })
+    .staggerTo(msgs, 0.8, {
+      autoAlpha:1,
+      x:0,
+      ease:Power3.easeInOut
+    }, 0.2, '+= 2');
+
 
   },
 

@@ -2,8 +2,15 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 300px;
+	width: 290px;
 	height: 100%;
 	overflow: auto;
 	overflow-x: hidden;
+	background: #000;
+	padding-left: 15px;
+	padding-right: 20px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	color: #fff;
+	font-family: 'Courier New';
 }

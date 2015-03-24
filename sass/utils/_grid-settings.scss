@@ -7,6 +7,9 @@ $grid-margin: 10;
 $max-width: calc(100% - 2 * #{$grid-margin});
 
 // DEBUG
-// $visual-grid: true;
+$visual-grid: true;
 $visual-grid-index: front;
 $visual-grid-color: #1abc9c;
+
+$mobile: new-breakpoint(max-width 640px 4);
+$large-screen: new-breakpoint(min-width 860px 10);

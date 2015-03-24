@@ -15,11 +15,15 @@
  */
 
 var Vue = require('vue');
+var forEach = require('forEach');
 var DataManager = require('../utils/data-manager');
 
+//Wordpress
 var get_posts_url = 'http://wp.bienbienbien.dev/api/get_posts/';
-var api = require('../components/slack/tk');
-var get_slack_posts = 'https://slack.com/api/channels.history?token=' + api.tk + '&channel=C024YKWRU';
+
+//Slack
+var get_slack_posts = 'http://wp.bienbienbien.dev/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
+var get_slack_members = 'http://wp.bienbienbien.dev/wp-admin/admin-ajax.php?action=get_all_members';
 var datas = {};
 
 
@@ -61,22 +65,29 @@ function init() {
       'post-section': require('../sections/post/post')
     },
 
-    created: function() {
+    filters:{
+      'formatTimestamp': require('../filters/formatTimestamp/formatTimestamp')
     },
 
-    ready: function() {
-    },
+    created: function() {},
 
-    methods: {
-    }
+    ready: function() {},
+
+    methods: {}
   });
 }
 
-window.onload = function() {
-  DataManager.getJsons([get_posts_url, get_slack_posts]).then(function(response) {
+function loadData() {
+  DataManager.getJsons([get_posts_url, get_slack_posts, get_slack_members]).then(function(response) {
     datas.posts = response[0].posts;
-    datas.msgs = response[1].messages;
-
+    datas.msgs = response[1].data.messages;
+    datas.members = response[2].data.members;
     init();
   });
+};
+
+window.onload = function() {
+
+  loadData();
+
 };

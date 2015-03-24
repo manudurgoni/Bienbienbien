@@ -34,9 +34,8 @@ ul, li {
 }
 
 .global{
-    width: 100%;
     height: 100%;
-    margin-left: 300px;
+    margin-left: 290px;
     background-color: red;
     overflow: auto;
 
@@ -45,6 +44,6 @@ ul, li {
 
 .section{
     position: absolute;
-    width: 100%;
+    width: calc(100% - 290px);
     background-color: red;
 }
