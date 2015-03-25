@@ -4,13 +4,23 @@
 		<li v-repeat="msgs" class="msg">
 
 			<header>
-				<img class="avatar" src="http://placehold.it/35x35" alt="">
-				<p><strong>{{ user }}</strong> {{ ts | formatTimestamp}}</p>
+				<img class="avatar" v-attr="src:user.avatar_url" alt="">
+				<p><strong>{{ user.real_name }}</strong> [{{ ts | formatTimestamp}}]</p>
 			</header>
 
-			<div>
-      	<p>{{text}}</p>
-			</div>
+      <p v-if="text">{{{text}}}</p>
+
+      <div v-repeat="attachments" class="attachments">
+      	<a href="{{from_url}}" target="_blank">
+      		<p>{{ from_url }}</p>
+
+      		<div class="infos">
+      			<img v-attr="src:thumb_url||image_url" alt="" class="thumb">
+      			<p class="title" v-if="title">{{ title }}</p>
+      			<p class="desc" v-if="text">{{ text }}</p>
+      		</div>
+      	</a>
+      </div>
 
       <!-- <div v-if="attachments">
       	attachements

@@ -19,7 +19,8 @@ var forEach = require('forEach');
 var DataManager = require('../utils/data-manager');
 
 //Wordpress
-var wp_url = 'http://192.168.1.158/bienbienbien/wordpress'
+//var wp_url = 'http://192.168.1.158/bienbienbien/wordpress'
+var wp_url = 'http://wp.bienbienbien.dev'
 var get_posts_url = wp_url + '/api/get_posts/';
 
 //Slack
@@ -39,7 +40,8 @@ function init() {
     data: function() {
       return {
         posts: datas.posts,
-        msgs: datas.msgs
+        msgs: datas.msgs,
+        members: datas.members,
       };
     },
 
