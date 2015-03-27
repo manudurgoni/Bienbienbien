@@ -5,7 +5,7 @@
 
 			<header>
 				<img class="avatar" v-attr="src:user.avatar_url" alt="">
-				<p><strong>{{ user.real_name }}</strong> [{{ ts | formatTimestamp}}]</p>
+				<p><strong>{{ user.real_name }}</strong><br/>[{{ ts | formatTimestamp}}]</p>
 			</header>
 
       <p v-if="text">{{{text}}}</p>
@@ -15,7 +15,7 @@
       		<p>{{ from_url }}</p>
 
       		<div class="infos">
-      			<img v-attr="src:thumb_url||image_url" alt="" class="thumb">
+      			<img v-if="thumb_url||image_url" v-attr="src:thumb_url||image_url" alt="" class="thumb">
       			<p class="title" v-if="title">{{ title }}</p>
       			<p class="desc" v-if="text">{{ text }}</p>
       		</div>

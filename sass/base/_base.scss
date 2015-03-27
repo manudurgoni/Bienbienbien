@@ -1,7 +1,13 @@
+*{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 html, body {
     margin: 0;
     padding: 0;
     @extend %full-size;
+    background-color: #33333e;
 }
 
 body {
@@ -33,17 +39,57 @@ ul, li {
     padding: 0;
 }
 
+
+/**
+ * Global side
+ */
 .global{
     height: 100%;
     margin-left: 290px;
-    background-color: red;
-    overflow: auto;
+    position: relative;
+    
+    
+    .background-home{
+        position: fixed;
+        top: 0;bottom: 0;
+        left: 290px;right: 0;
+        background-size: cover;
 
+        &:before{
+            display: block;
+            content: "";
+            position: absolute;
+            top: 0;left: 0;
+            bottom: 0;right: 0;
+            background-color: rgba(0, 0, 0, 0.35);
+        }
+    }
+
+    /**
+     * BBB Logo
+     */
+    header.bbb{
+        position: relative;
+        width: 660px;
+        margin: auto;
+        padding-top: 140px;
+
+        h1{
+            font-family: 'Arial';
+            font-size: em(75);
+            line-height: 90px;
+            padding: 0px 15px;
+            margin: 0;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff0000;
+            display: inline-block;
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
 }
 
 
 .section{
-    position: absolute;
-    width: calc(100% - 290px);
-    background-color: red;
 }

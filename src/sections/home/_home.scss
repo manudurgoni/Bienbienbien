@@ -1,8 +1,37 @@
+
 .home {
-    padding: 30px;
-    background-color: yellow;
-    h2 {
-        text-transform: uppercase;
-        font-size: 70px;
-    }
+  width: 660px;
+	margin: 0 auto;
+	margin-top: 80px;
+	font-family: 'Arial';
+
+	>.post{
+		display: block;
+		margin-bottom: 55px;
+		position: relative;
+	
+		h1{
+			font-weight: bold;
+			font-size: em(45);
+			line-height: 50px;
+			.highlight {
+		    display: inline;
+			  background-color: #fff;
+			  color: #000;
+			  padding-left: 15px;
+			  padding-right: 15px;
+		    -webkit-box-decoration-break: clone;
+		    -ms-box-decoration-break: clone;
+		    -o-box-decoration-break: clone;
+		    box-decoration-break: clone;
+		  }
+		}
+
+		h2{
+			color: #fff;
+			font-size: em(16);
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
 }

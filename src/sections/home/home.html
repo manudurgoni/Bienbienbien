@@ -1,9 +1,6 @@
-<div class="section" v-transition="appear">
-	
-	<article v-repeat="posts" class="post-{{id}}">
-		<a href="/article/{{slug}}">
-			{{{ title }}}
-		</a>
-	</article>
-
+<div class="section home" v-transition="appear">
+	<a v-repeat="posts" id="article-{{slug}}" class="post" href="/article/{{slug}}">
+		<h1><span class="highlight">{{{ title }}}</span></h1>
+		<h2>{{{ custom_fields.surtitre }}}</h2>
+	</a>
 </div>

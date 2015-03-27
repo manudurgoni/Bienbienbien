@@ -13,5 +13,6 @@ gulp.task('serve', ['clean', 'jshint', 'styles', 'watch'], function () {
         }
     });
 
-    gulp.watch(['./static/build/**/*.*'], reload);
+    gulp.watch('./sass/**/*.scss', ['styles']);
+    gulp.watch(['./static/build/**/*.js','./static/build/**/*.html'], reload);
 });

@@ -5,7 +5,9 @@ var gulp = require('gulp'),
     handleErrors = require('./utils/handleErrors'),
     autoprefixer = require('gulp-autoprefixer'),
     minifyCSS = require('gulp-minify-css'),
-    argv = require('yargs').argv;
+    argv = require('yargs').argv,
+    browserSync = require('browser-sync'),
+    reload = browserSync.reload;
 
 var env = argv.env != "production";
 
@@ -19,5 +21,6 @@ gulp.task('styles', function() {
     .on('error', handleErrors)
     .pipe(autoprefixer())
     .pipe(env ? gutil.noop() : minifyCSS())
-    .pipe(gulp.dest('./static/build/'));
+    .pipe(gulp.dest('./static/build/'))
+    .pipe(reload({stream: true}));
 });

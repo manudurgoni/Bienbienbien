@@ -22,6 +22,7 @@ var DataManager = require('../utils/data-manager');
 //var wp_url = 'http://192.168.1.158/bienbienbien/wordpress'
 var wp_url = 'http://wp.bienbienbien.dev'
 var get_posts_url = wp_url + '/api/get_posts/';
+var get_background_url = wp_url + '/wp-admin/admin-ajax.php?action=get_custom_background_infos';
 
 //Slack
 var get_slack_posts = wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
@@ -42,6 +43,7 @@ function init() {
         posts: datas.posts,
         msgs: datas.msgs,
         members: datas.members,
+        background_url: datas.background_url
       };
     },
 
@@ -68,23 +70,39 @@ function init() {
       'post-section': require('../sections/post/post')
     },
 
-    filters:{
+    filters: {
       'formatTimestamp': require('../filters/formatTimestamp/formatTimestamp')
     },
 
     created: function() {},
 
-    ready: function() {},
+    ready: function() {
+    },
 
-    methods: {}
+    methods: {
+
+    }
   });
 }
 
+
+function createBackground() {
+  var globalDiv = document.querySelector('body .global');
+  
+  var bgDiv = document.createElement('div');
+  bgDiv.className = 'background-home';
+  bgDiv.style.backgroundImage = 'url(' + datas.background_url + ')';
+  globalDiv.insertBefore(bgDiv, globalDiv.firstChild);
+};
+
 function loadData() {
-  DataManager.getJsons([get_posts_url, get_slack_posts, get_slack_members]).then(function(response) {
+  DataManager.getJsons([get_posts_url, get_slack_posts, get_slack_members, get_background_url]).then(function(response) {
     datas.posts = response[0].posts;
     datas.msgs = response[1].data.messages;
     datas.members = response[2].data.members;
+    datas.background_url = response[3].url;
+
+    createBackground();
     init();
   });
 };
