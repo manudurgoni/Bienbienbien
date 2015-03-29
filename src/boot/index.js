@@ -43,7 +43,11 @@ function init() {
         posts: datas.posts,
         msgs: datas.msgs,
         members: datas.members,
-        background_url: datas.background_url
+        background:{
+          background_url: datas.background_url,
+          first_background_div:document.querySelector('.background-home').firstChild,
+          last_background_div:document.querySelector('.background-home').lastChild
+        }
       };
     },
 
@@ -91,8 +95,18 @@ function createBackground() {
   
   var bgDiv = document.createElement('div');
   bgDiv.className = 'background-home';
-  bgDiv.style.backgroundImage = 'url(' + datas.background_url + ')';
   globalDiv.insertBefore(bgDiv, globalDiv.firstChild);
+
+  for (var i = 0; i < 2; i++) {
+    var div = document.createElement('div');
+    
+    if(i===0){
+      div.style.backgroundImage = 'url(' + datas.background_url + ')';
+    }
+    
+    bgDiv.appendChild(div);
+  };
+
 };
 
 function loadData() {

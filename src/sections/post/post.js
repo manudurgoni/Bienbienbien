@@ -2,10 +2,11 @@
 
 var TweenMax = require('TweenMax');
 var DataManager = require('../../utils/data-manager');
-var loaderMixin = require('vue-loader-mixin');
+var resizeMixin = require('vue-resize-mixin');
 var forEach = require('forEach');
 
 var get_posts_url = 'http://wp.bienbienbien.dev/api/get_posts/';
+var _this;
 
 
 module.exports = {
@@ -13,68 +14,34 @@ module.exports = {
   replace: true,
   template: require('./post.html'),
 
-  mixins: [loaderMixin],
+  mixins: [resizeMixin],
 
   events: {
-    'load:progress': 'onLoadProgress',
-    'load:complete': 'onLoadComplete'
+    'resize': 'onResize'
   },
-
-  // Static manifest
-  manifest: [
-
-  ],
 
   data: function() {
     return {
       post: null,
-      tests: {
-        iframeLoaded: false,
-        imgLoaded: false
-      }
     };
   },
 
   created: function() {
+    _this = this;
     this.getPost();
-
-    // this.$options.manifest = [
-    //   // 'https://www.youtube.com/embed/qPeb0X4IRWI?feature=oembed',
-    //   'http://wp.bienbienbien.dev/wp-content/uploads/2015/03/1661407765931.jpg',
-    //   'http://wp.bienbienbien.dev/wp-content/uploads/2015/03/complot.jpg'
-    // ];
   },
 
   ready: function() {
-    // this.load();
-    // 
-    var self = this;
-    var content = document.createElement('div');
-    content.innerHTML = this.post.content;
-
+    
+    TweenMax.set(this.$el, {
+      autoAlpha: 0,
+      y: 30
+    });
 
     setTimeout(function() {
-      if (content.querySelectorAll('iframe').length) {
-        self.loadIframes(content.querySelectorAll('iframe'));
-      } else {
-        self.showContent();
-      }
-      self.$el.appendChild(content);
+      _this.init();
 
     }, 1000);
-
-
-
-
-
-
-    // content.onload = function(){
-    // 	console.log('yao');
-    // }
-
-    // this.post.content = content;
-
-    // content.$appendTo('content');
 
   },
 
@@ -83,54 +50,67 @@ module.exports = {
   transitions: {
     appear: {
       enter: function(el, done) {
-        TweenMax.set(el, {
-          display: 'none',
-          autoAlpha: 0,
-          y: -30
-        });
-
-        // TweenMax.set(el.querySelectorAll('iframe'), {
-        // 	display:'none'
-        // })
         done();
       },
       leave: function(el, done) {
         var tl = new TimelineMax();
-        tl.to(el, 1, {
-          autoAlpha: 0,
-          y: 30,
-          onComplete: function() {
-            done();
-          }
-        });
+
+        tl.set(_this.background.first_background_div, {
+            backgroundImage: 'url(' + _this.background.background_url + ')',
+          })
+          .to(_this.background.last_background_div, 0.6, {
+            autoAlpha: 0,
+            scale: 1.02,
+            ease: Cubic.easeInOut
+          }, '+=0.2').to(el, 1, {
+            autoAlpha: 0,
+            y: 30,
+            onComplete: function() {
+              done();
+            }
+          });
       }
     }
   },
 
   methods: {
 
-    onLoadProgress: function(event) {
-      this.progress = event.progress;
-
-      console.log(this.progress);
+    init: function() {
+      window.scrollTo(0,0);
+      if (_this.$$.content.querySelectorAll('iframe').length) {
+        _this.appendElement(_this.post.title, _this.post.custom_fields.surtitre, _this.post.content);
+        _this.loadIframes(_this.$$.content.querySelectorAll('iframe'));
+      } else {
+        _this.appendElement(_this.post.title, _this.post.custom_fields.surtitre, _this.post.content);
+        _this.showContent();
+      }
     },
 
-    onLoadComplete: function(event) {
-      this.progress = 1;
-      // You can use the load:complete event with the `wait-for` directive
+    appendElement: function(title, subtitle, content) {
+      _this.$$.title.innerHTML = title;
+      _this.$$.subtitle.innerHTML = subtitle;
+      _this.$$.content.innerHTML = content;
+
+    },
+
+    onResize: function(event) {
+      var width = event.width;
+      var height = event.height;
+
+      var marginTop = height - this.$$.titleBlock.offsetHeight - 20;
+      if (marginTop > 0) {
+        this.$el.style.marginTop = marginTop + 'px';
+      }
     },
 
     loadIframes: function(iframes) {
       var self = this;
       var i = 0;
       forEach(iframes, function(iframe, index) {
-        // iframe.style.display = 'none';
         iframe.addEventListener('load', function() {
-          console.log(i);
           i++;
 
           if (i === iframes.length) {
-            console.log('done');
             self.showContent();
           }
 
@@ -139,12 +119,16 @@ module.exports = {
     },
 
     showContent: function() {
-      console.log(this.$el);
-      TweenMax.to(this.$el, 1, {
+      window.dispatchEvent(new Event('resize'));
+      var tl = new TimelineMax();
+      tl.set(this.$$.content, {
         display: 'block',
+      }).to(this.$el, 1, {
         autoAlpha: 1,
         y: 0,
-        delay: 1
+        delay: 1.5
+      }).to(this.$$.content, 0.5, {
+        autoAlpha: 1
       });
     },
 

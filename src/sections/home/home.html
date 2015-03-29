@@ -1,5 +1,6 @@
 <div class="section home" v-transition="appear">
-	<a v-repeat="posts" id="article-{{slug}}" class="post" href="/article/{{slug}}">
+	<a v-repeat="posts" id="article-{{slug}}" class="post" href="/article/{{slug}}" data-cover="{{thumbnail_images.cover.url}}" v-on="mouseenter: toggleBackground(this,true), mouseleave:toggleBackground(this,false)">
+
 		<h1><span class="highlight">{{{ title }}}</span></h1>
 		<h2>{{{ custom_fields.surtitre }}}</h2>
 	</a>
