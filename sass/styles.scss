@@ -28,6 +28,12 @@
 @import "utils/mixins/font-face";
 @import "utils/mixins/appearance";
 
+/*
+    Components
+    Loader, etc
+ */
+@import "components/loader";
+
 @import "base/base";
 
 /*

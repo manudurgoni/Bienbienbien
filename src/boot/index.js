@@ -29,6 +29,10 @@ var get_slack_posts = wp_url + '/wp-admin/admin-ajax.php?action=get_messages_fro
 var get_slack_members = wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
 var datas = {};
 
+//Dom
+var transitionShape = document.querySelector('.loader');
+var headerBBB = document.querySelector('header.bbb');
+var cubes = headerBBB.querySelectorAll('.cube');
 
 /*
     Plugins, lib config...
@@ -43,10 +47,10 @@ function init() {
         posts: datas.posts,
         msgs: datas.msgs,
         members: datas.members,
-        background:{
+        background: {
           background_url: datas.background_url,
-          first_background_div:document.querySelector('.background-home').firstChild,
-          last_background_div:document.querySelector('.background-home').lastChild
+          first_background_div: document.querySelector('.background-home').firstChild,
+          last_background_div: document.querySelector('.background-home').lastChild
         }
       };
     },
@@ -80,8 +84,7 @@ function init() {
 
     created: function() {},
 
-    ready: function() {
-    },
+    ready: function() {},
 
     methods: {
 
@@ -92,18 +95,18 @@ function init() {
 
 function createBackground() {
   var globalDiv = document.querySelector('body .global');
-  
+
   var bgDiv = document.createElement('div');
   bgDiv.className = 'background-home';
   globalDiv.insertBefore(bgDiv, globalDiv.firstChild);
 
   for (var i = 0; i < 2; i++) {
     var div = document.createElement('div');
-    
-    if(i===0){
+
+    if (i === 0) {
       div.style.backgroundImage = 'url(' + datas.background_url + ')';
     }
-    
+
     bgDiv.appendChild(div);
   };
 
@@ -118,11 +121,31 @@ function loadData() {
 
     createBackground();
     init();
+
+    var tlTransitionShape = new TimelineMax();
+    tlTransitionShape.staggerTo(cubes, 1.2, {
+      rotationX: 180,
+      ease: Cubic.easeInOut,
+      repeat: 1,
+      repeatDelay:0.5
+    }, 0.1, 0.6, function() {
+      console.log('complete');
+    }).to(transitionShape,1.4,{
+      xPercent:100,
+      ease:Expo.easeInOut,
+      onComplete:function(){
+      }
+    }).to(headerBBB,0.8,{
+      scale:1.07,
+      y:-50,
+      autoAlpha:0,
+      // display:'none',
+      ease:Cubic.easeInOut,
+ 
+    },'-=1');
   });
 };
 
-window.onload = function() {
 
-  loadData();
-
-};
+// window.addEventListener('load', loadData);
+window.addEventListener('DOMContentLoaded', loadData);

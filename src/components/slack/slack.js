@@ -38,15 +38,15 @@ module.exports = {
     var msgs = this.$el.querySelectorAll('li.msg');
     var tl = new TimelineMax();
 
-    tl.set(msgs,{
-      autoAlpha:0,
-      x:-30
-    })
-    .staggerTo(msgs, 0.6, {
-      autoAlpha:1,
-      x:0,
-      ease:Power3.easeInOut
-    }, 0.13, '+= 1');
+    // tl.set(msgs,{
+    //   autoAlpha:0,
+    //   x:-30
+    // })
+    // .staggerTo(msgs, 0.6, {
+    //   autoAlpha:1,
+    //   x:0,
+    //   ease:Power3.easeInOut
+    // }, 0.13, '+= 1');
 
 
   },

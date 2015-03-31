@@ -39,6 +39,86 @@ ul, li {
     padding: 0;
 }
 
+/**
+ * BBB Logo
+ */
+header.bbb{
+    position: absolute;
+    margin: auto;
+    font-family: 'Arial';
+    font-size: em(56);
+    line-height: 90px;
+    margin: 0;
+    font-weight: bold;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    z-index: 101;
+
+    a{
+        color: #fff;
+    }
+
+    .wrap {
+        perspective: 1000px;
+        width: 360px;
+        height: 90px;
+
+    }
+    
+    $width:120px;
+    .cube {
+        position: absolute;
+        width: $width;
+        height: 90px;
+        transform-style: preserve-3d;
+        transform: translateZ( -45px );
+
+
+        &:nth-child(1n){
+            left: 0;
+        }
+
+        &:nth-child(2n){
+            z-index: 1;
+            left: $width;
+        }
+
+        &:nth-child(3n){
+            left: $width * 2;
+        }
+    }
+
+
+    .cube > span {
+        background-color: red;
+        display: block;
+        position: absolute;
+        height: 90px;
+        width: 120px;
+
+        &.front {
+            transform: rotateY( 0deg ) translateZ( 45px );
+            background-color: red;
+        }
+
+        &.back {
+            transform: rotateX( 180deg ) translateZ( 45px );
+        }
+        
+        &.top {
+            transform: rotateX( 90deg ) translateZ( 45px );
+            background-color: yellow;
+        }
+        &.bottom {
+            transform: rotateX( -90deg ) translateZ( 45px );
+            background-color: blue;
+        }
+        
+    }
+}
 
 /**
  * Global side
@@ -76,106 +156,7 @@ ul, li {
         }
     }
 
-    /**
-     * BBB Logo
-     */
-    header.bbb{
-        position: relative;
-        width: 660px;
-        margin: auto;
-        padding-top: 140px;
-        font-family: 'Arial';
-        font-size: em(56);
-        line-height: 90px;
-        margin: 0;
-        font-weight: bold;
-        
-        -webkit-font-smoothing: none;
-        -moz-osx-font-smoothing: grayscale;
-
-        a{
-            color: #fff;
-        }
-
-        .wrap {
-            perspective: 800px;
-
-            &:hover{
-                .cube{
-                    &:nth-child(1n){
-                        transform: rotateX(-180deg);
-                    }
-
-                    &:nth-child(2n){
-                        transform: rotateX(-180deg);
-                    }
-
-                    &:nth-child(3n){
-                        transform: rotateX(-180deg);
-                    }
-                }
-            }
-        }
-        
-        $width:120px;
-        .cube {
-            position: absolute;
-            width: $width;
-            transform-style: preserve-3d;
-            // animation: spin-vertical 5s infinite linear;
-            transform-origin: 50% 50%;
-            height: 90px;
-            top: 0;
-
-
-            &:nth-child(1n){
-                left: 0;
-                transition: transform 0.8s $ease-cubic-in-out;
-            }
-
-            &:nth-child(2n){
-                left: $width;
-                transition: transform 0.8s $ease-cubic-in-out;
-                transition-delay: 0.15s;
-            }
-
-            &:nth-child(3n){
-                left: $width * 2;
-                transition: transform 0.8s $ease-cubic-in-out;
-                transition-delay: 0.30s;
-            }
-        }
-
-    
-        .cube > span {
-            background-color: red;
-            display: block;
-            position: absolute;
-            height: 90px;
-            &.back {
-                transform: translateZ(-45px) rotateX(180deg);
-            }
-            
-            &.top {
-                transform: rotateX(-270deg) translateY(-45px);
-                transform-origin: top center;
-                background-color: yellow;
-            }
-            &.bottom {
-                transform: rotateX(-90deg) translateY(45px);
-                transform-origin: bottom center;
-                background-color: blue;
-            }
-            &.front {
-                transform: translateZ(45px);
-                background-color: red;
-            }
-        }
-
-
-
-        
-    }
+  
 }
 
 
@@ -185,17 +166,3 @@ ul, li {
     opacity: 0;
 }
 
-@-webkit-keyframes spin-vertical {
-    from { -webkit-transform: rotateX(0); }
-    to { -webkit-transform: rotateX(-360deg); }
-}
-
-@-ms-keyframes spin-vertical {
-    from { ms-transform: rotateX(0); }
-    to { ms-transform: rotateX(-360deg); }
-}
-
-@keyframes spin-vertical {
-    from { transform: rotateX(0); }
-    to { transform: rotateX(-360deg); }
-}
