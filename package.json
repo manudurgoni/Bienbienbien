@@ -72,6 +72,7 @@
   },
   "dependencies": {
     "bindall-standalone": "~1.0.5",
+    "component-raf": "^1.2.0",
     "extend": "*",
     "moment": "^2.9.0",
     "page": "~1.3.7",

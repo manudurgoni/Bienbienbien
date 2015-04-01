@@ -3,6 +3,7 @@
 var TweenMax = require('TweenMax');
 var forEach = require('forEach');
 
+
 var self;
 var regex_url_slack = /<(https?:\/\/[^\s]+)>/g;
 
@@ -37,6 +38,24 @@ module.exports = {
 
     var msgs = this.$el.querySelectorAll('li.msg');
     var tl = new TimelineMax();
+    
+    var imgs = this.$el.querySelectorAll('img');
+    var imgLoaded = 0;
+
+    if(imgs.length){
+      forEach(imgs,function(img,i){
+        img.addEventListener('load',function(){
+          imgLoaded++;
+
+          if(imgLoaded === imgs.length-1){
+            self.$emit('viewContentLoaded');
+          }
+        });
+      });
+    }else{
+      this.$emit('viewContentLoaded');
+    }
+
 
     // tl.set(msgs,{
     //   autoAlpha:0,

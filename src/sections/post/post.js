@@ -97,9 +97,9 @@ module.exports = {
       var width = event.width;
       var height = event.height;
 
-      var marginTop = height - this.$$.titleBlock.offsetHeight - 20;
-      if (marginTop > 0) {
-        this.$el.style.marginTop = marginTop + 'px';
+      var paddingTop = height - this.$$.titleBlock.offsetHeight - 20;
+      if (paddingTop > 0) {
+        this.$el.querySelector('div.inner').style.paddingTop = paddingTop + 'px';
       }
     },
 
@@ -128,7 +128,10 @@ module.exports = {
         y: 0,
         delay: 1.5
       }).to(this.$$.content, 0.5, {
-        autoAlpha: 1
+        autoAlpha: 1,
+        onComplete:function(){
+          _this.$emit('viewContentLoaded');
+        }
       });
     },
 

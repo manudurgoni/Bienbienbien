@@ -8,16 +8,14 @@ html, body {
     padding: 0;
     @extend %full-size;
     background-color: #000;
+    overflow: hidden;
 }
 
 body {
     position: relative;
 }
 
-html {
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
+
 
 [v-cloak] {
     display: none;

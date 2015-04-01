@@ -18,13 +18,14 @@ var Vue = require('vue');
 var forEach = require('forEach');
 var DataManager = require('../utils/data-manager');
 
-//Wordpress
-//var wp_url = 'http://192.168.1.158/bienbienbien/wordpress'
-var wp_url = 'http://wp.bienbienbien.dev'
+// Environment
+var dev = false;
+var wp_url = 'http://192.168.1.158/bienbienbien/wordpress';
+// var wp_url = 'http://wp.bienbienbien.dev';
+
+// Datas
 var get_posts_url = wp_url + '/api/get_posts/';
 var get_background_url = wp_url + '/wp-admin/admin-ajax.php?action=get_custom_background_infos';
-
-//Slack
 var get_slack_posts = wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
 var get_slack_members = wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
 var datas = {};
@@ -33,6 +34,8 @@ var datas = {};
 var transitionShape = document.querySelector('.loader');
 var headerBBB = document.querySelector('header.bbb');
 var cubes = headerBBB.querySelectorAll('.cube');
+
+
 
 /*
     Plugins, lib config...
@@ -76,6 +79,10 @@ function init() {
       'home-section': require('../sections/home/home'),
       'about-section': require('../sections/about/about'),
       'post-section': require('../sections/post/post')
+    },
+
+    directives: {
+      'scroll': require('../directives/scroll.js')
     },
 
     filters: {
@@ -123,26 +130,33 @@ function loadData() {
     init();
 
     var tlTransitionShape = new TimelineMax();
-    tlTransitionShape.staggerTo(cubes, 1.2, {
-      rotationX: 180,
-      ease: Cubic.easeInOut,
-      repeat: 1,
-      repeatDelay:0.5
-    }, 0.1, 0.6, function() {
-      console.log('complete');
-    }).to(transitionShape,1.4,{
-      xPercent:100,
-      ease:Expo.easeInOut,
-      onComplete:function(){
-      }
-    }).to(headerBBB,0.8,{
-      scale:1.07,
-      y:-50,
-      autoAlpha:0,
-      // display:'none',
-      ease:Cubic.easeInOut,
- 
-    },'-=1');
+
+
+    if (dev) {
+      tlTransitionShape.set(headerBBB, {
+        display: 'none'
+      }).set(transitionShape, {
+        display: 'none'
+      });
+    } else {
+      tlTransitionShape.staggerTo(cubes, 1.2, {
+        rotationX: 180,
+        ease: Cubic.easeInOut,
+        repeat: 1,
+        repeatDelay: 0.5
+      }, 0.1, 0.6, function() {}).to(transitionShape, 1.4, {
+        xPercent: 100,
+        ease: Expo.easeInOut,
+        onComplete: function() {}
+      }).to(headerBBB, 0.8, {
+        scale: 1.07,
+        y: -50,
+        autoAlpha: 0,
+        // display:'none',
+        ease: Cubic.easeInOut,
+
+      }, '-=1');
+    }
   });
 };
 

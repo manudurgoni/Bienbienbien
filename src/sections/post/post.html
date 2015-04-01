@@ -1,8 +1,10 @@
-<div class="section single-post" v-transition="appear">
-  <div class="title-block" v-el="titleBlock">
-    <h1 v-el="title"></h1>
-    <h2 v-el="subtitle"></h2>
-  </div>
+<div class="section single-post" v-transition="appear" v-scroll=".inner">
+	<div class="inner">
+	  <div class="title-block" v-el="titleBlock">
+	    <h1 v-el="title"></h1>
+	    <h2 v-el="subtitle"></h2>
+	  </div>
 
-  <div class="content"><div v-el="content"></div></div>
+	  <div class="content"><div v-el="content"></div></div>
+	</div>
 </div>

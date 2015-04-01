@@ -1,17 +1,16 @@
 .slack-component {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 290px;
   height: 100%;
-  overflow: auto;
-  overflow-x: hidden;
   background: #000;
-  padding: 40px 15px;
   color: #fff;
   font-family: 'Courier New';
   
   .messages {
+    padding: 40px 15px;
+
     >.msg {
       margin-bottom: 20px;
       &:after {
