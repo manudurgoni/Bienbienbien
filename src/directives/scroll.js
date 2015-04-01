@@ -16,15 +16,16 @@ module.exports = {
     this.currentY = 0;
     this.targetY = 0;
     this.target = this.expression;
+    if (this.el.classList.contains('single-post')) {
+      this.cover = document.querySelector('.background-home');
+    }
+
+
+
 
     Vue.nextTick(function() {
       _this.ready();
     });
-
-    // Vue.$on('slackImgsLoaed',function(){
-    //   console.log('slackImgsLoaed')
-    // })
-
   },
 
   /**
@@ -34,37 +35,12 @@ module.exports = {
     var _this = this;
 
     this.content = this.el.querySelector(this.target);
-    console.log(this.el)
     
 
-    this.vm.$on('viewContentLoaded',function(){
-      console.log('viewContentLoaded')
+    this.vm.$on('viewContentLoaded', function() {
       _this.contentHeight = _this.content.offsetHeight;
       _this.createVS();
     })
-
-
-
-    // var imgs = this.el.querySelectorAll('img');
-    // var imgLoaded = 0;
-    // forEach(imgs, function(img, i) {
-    //   // console.log(img);
-    //   img.addEventListener('load', function() {
-    //     imgLoaded++;
-
-    //     if (imgLoaded === imgs.length - 1) {
-    //       _this.vm.$broadcast('slackImgsLoaed');
-    //       console.log('slackImgsLoaed')
-    //     }
-    //   });
-
-
-    // });
-
-
-
-
-    
   },
 
   /**
@@ -87,12 +63,11 @@ module.exports = {
       _this.targetY = Math.min(0, _this.targetY);
     });
 
-
-    this.tamere();
+    this.move();
   },
 
-  tamere: function() {
-    raf(this.tamere.bind(this));
+  move: function() {
+    raf(this.move.bind(this));
 
     this.currentY += (this.targetY - this.currentY) * this.ease;
 
@@ -100,6 +75,13 @@ module.exports = {
       force3D: true,
       y: this.currentY
     });
+
+    if (this.cover!==undefined) {
+      TweenMax.set(this.cover, {
+        force3D: true,
+        y: this.currentY / 5
+      });
+    }
 
   }
 };

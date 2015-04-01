@@ -12,4 +12,6 @@ $visual-grid-index: front;
 $visual-grid-color: #1abc9c;
 
 $mobile: new-breakpoint(max-width 640px 4);
-$large-screen: new-breakpoint(min-width 860px 10);
+$tablet: new-breakpoint(min-width 990px 10);
+$desktop: new-breakpoint(min-width 1230px 10);
+$large-screen: new-breakpoint(min-width 1400px 10);
