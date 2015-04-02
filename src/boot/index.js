@@ -49,7 +49,6 @@ function init() {
         background: {
           background_url: datas.background_url,
           first_background_div: document.querySelector('.background-home').firstChild,
-          last_background_div: document.querySelector('.background-home').lastChild
         }
       };
     },

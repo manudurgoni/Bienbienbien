@@ -41,67 +41,34 @@ module.exports = {
 
   ready: function() {
     var tl = new TimelineMax();
-
-
+    this.menuBtn = document.querySelector('.menu-button');
+    this.menuBtnBlackLayer = this.menuBtn.querySelector('.black');
+    this.articles = this.$el.querySelectorAll('.post');
 
     tl.set(this.$el, {
+        autoAlpha: 1,
+        xPercent: -50,
+      }).set(this.articles, {
         autoAlpha: 0,
         y: -30,
-        xPercent: -50,
       })
-      .to(this.$el, 0.7, {
+      .to(this.menuBtnBlackLayer, 0.5, {
+        height: 0,
+      }, '+=1')
+      .staggerTo(this.articles, 1, {
         autoAlpha: 1,
         y: 0,
-        delay: 1,
-        onComplete: function() {
-          _this.$emit('viewContentLoaded');
-        }
+        ease: Power3.easeOut,
+      }, 0.15, '+=0.5', function() {
+        _this.$emit('viewContentLoaded');
       });
+
+
   },
 
   beforeDestroy: function() {},
 
   methods: {
-    getCover: function(item) {
-      return item.getAttribute('data-cover');
-    },
 
-    toggleBackground: function(item, isEnter) {
-
-      window.clearTimeout(this.timeoutBg);
-
-      if (isEnter) {
-        var cover = this.getCover(item.$el);
-
-        this.tlBackground.set(this.background.last_background_div, {
-          autoAlpha: 0,
-          backgroundImage: 'url(' + cover + ')',
-          scale: 1.02
-        }).to(this.background.last_background_div, 0.5, {
-          autoAlpha: 1,
-          scale: 1,
-          ease: Cubic.easeInOut,
-          onComplete: function() {
-
-          }
-        }).set(this.background.first_background_div, {
-          backgroundImage: 'url(' + cover + ')'
-        })
-
-
-      } else {
-        this.timeoutBg = setTimeout(function() {
-          _this.tlBackground.set(_this.background.first_background_div, {
-              backgroundImage: 'url(' + _this.background.background_url + ')',
-            })
-            .to(_this.background.last_background_div, 0.6, {
-              autoAlpha: 0,
-              scale: 1.02,
-              ease: Cubic.easeInOut
-            }, '+=0.2');
-        }, 500);
-
-      }
-    }
   }
 };

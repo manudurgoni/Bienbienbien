@@ -7,7 +7,6 @@ var TweenMax = require('TweenMax');
 var forEach = require('forEach');
 
 
-
 module.exports = {
   bind: function(value) {
     var _this = this;
@@ -16,10 +15,7 @@ module.exports = {
     this.currentY = 0;
     this.targetY = 0;
     this.target = this.expression;
-
-
-
-
+    this.heightLayerMenu = 0;
 
     Vue.nextTick(function() {
       _this.ready();
@@ -28,24 +24,22 @@ module.exports = {
 
   unbind: function() {
     // do clean up work
-    // e.g. remove event listeners added in bind()
-
-    console.log(this.vs);
-    console.log(this.moveRaf);
     this.vs = null;
     raf.cancel(this.moveRaf);
     this.moveRaf = null;
-    console.log('unbind');
-    console.log(this.vs);
-    console.log(this.moveRaf);
 
     if (this.cover !== undefined) {
-      TweenMax.to(this.cover, 1,{
-        force3D:true,
+      TweenMax.to(this.cover, 1, {
+        force3D: true,
         y: 0,
         ease: Cubic.easeInOut
       });
     }
+  },
+
+
+  onResize: function(event) {
+    this.contentHeight = this.content.offsetHeight;
   },
 
   /**
@@ -56,8 +50,14 @@ module.exports = {
 
     this.content = this.el.querySelector(this.target);
 
+    this.menuBtn = document.querySelector('.menu-button');
+    this.menuBtnHeight = this.menuBtn.offsetHeight;
+    this.menuBtnBlackLayer = this.menuBtn.querySelector('.black');
+
     if (this.el.classList.contains('single-post')) {
-      this.cover = document.querySelector('.background-home');
+      this.cover = document.querySelector('.background-post');
+      this.contentPost = this.el.querySelector('.inner div.content');
+
     }
 
 
@@ -65,6 +65,10 @@ module.exports = {
     this.vm.$on('viewContentLoaded', function() {
       _this.contentHeight = _this.content.offsetHeight;
       _this.createVS();
+    })
+
+    this.vm.$on('contentResized', function() {
+      _this.contentHeight = _this.content.offsetHeight;
     })
   },
 
@@ -102,6 +106,19 @@ module.exports = {
     });
 
     if (this.cover !== undefined) {
+      if (this.currentY < -(this.contentPost.offsetTop - this.menuBtnHeight - this.menuBtn.offsetTop)) {
+        this.heightLayerMenu += ((this.targetY - this.currentY)) * this.ease;
+
+        TweenMax.set(this.menuBtnBlackLayer, {
+          height: Math.min(Math.max(-this.heightLayerMenu, 0), this.menuBtnHeight)
+        });
+      } else {
+        this.heightLayerMenu = 0;
+        TweenMax.set(this.menuBtnBlackLayer, {
+          height: 0
+        });
+      }
+
       TweenMax.set(this.cover, {
         force3D: true,
         y: this.currentY / 5

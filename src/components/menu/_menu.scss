@@ -1,29 +1,52 @@
-.menu-component{
-	.menu-button{
-		position: absolute;
-	  top: 25px;
-	  right: 25px;
-	  z-index: 10;
-	  cursor: pointer;
-
-	  >span{
-	  	display: block;
-	  	width: 43px;
-	  	height: 5px;
-	  	margin-bottom: 9px;
-	  	background-color: #fff;
-	  }
-	}
-
-	.menu-panel{
-		position: absolute;
-	  top: 0;
-	  right: 0;
-	  width: 290px;
-	  height: 100%;
-	  background: #fff;
-	  color: #000;
-	  z-index: 0;
-	  transform: translate3d(120px,0px,0px);
-	}
+.menu-component {
+  .menu-button {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 10;
+    cursor: pointer;
+    >span {
+      display: block;
+      width: 43px;
+      height: 5px;
+      margin-bottom: 9px;
+      background-color: #fff;
+      &:nth-child(3n) {
+        margin-bottom: 0;
+      }
+    }
+    .black {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 0px;
+      width: 43px;
+      overflow: hidden;
+      >div {
+        position: absolute;
+        bottom: 0px;
+        >span {
+          display: block;
+          width: 43px;
+          height: 5px;
+          margin-bottom: 9px;
+          background-color: #000;
+          &:nth-child(3n) {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+  .menu-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 290px;
+    height: 100%;
+    background: #fff;
+    color: #000;
+    z-index: 0;
+    transform: translate3d(120px, 0px, 0px);
+  }
 }

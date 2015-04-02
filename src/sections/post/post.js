@@ -4,6 +4,7 @@ var TweenMax = require('TweenMax');
 var DataManager = require('../../utils/data-manager');
 var resizeMixin = require('vue-resize-mixin');
 var forEach = require('forEach');
+var Vue = require('vue');
 
 var get_posts_url = 'http://wp.bienbienbien.dev/api/get_posts/';
 var _this;
@@ -32,21 +33,22 @@ module.exports = {
   },
 
   ready: function() {
-    
+
     TweenMax.set(this.$el, {
       autoAlpha: 0,
       y: 30
     });
 
+    this.backgroundDiv = this.$$.background.querySelector('div');
+    this.backgroundDiv.style.backgroundImage = 'url(' + this.post.thumbnail_images.cover.url + ')';
+
     setTimeout(function() {
       _this.init();
-
     }, 1000);
 
   },
 
-  beforeDestroy: function() {
-  },
+  beforeDestroy: function() {},
 
   transitions: {
     appear: {
@@ -56,20 +58,17 @@ module.exports = {
       leave: function(el, done) {
         var tl = new TimelineMax();
 
-        tl.set(_this.background.first_background_div, {
-            backgroundImage: 'url(' + _this.background.background_url + ')',
-          })
-          .to(_this.background.last_background_div, 0.6, {
-            autoAlpha: 0,
-            scale: 1.02,
-            ease: Cubic.easeInOut
-          }, '+=0.2').to(el, 1, {
-            autoAlpha: 0,
-            y: 30,
-            onComplete: function() {
-              done();
-            }
-          });
+        tl.to(_this.backgroundDiv, 0.6, {
+          autoAlpha: 0,
+          scale: 1.02,
+          ease: Cubic.easeInOut
+        }, '+=0.2').to(el, 1, {
+          autoAlpha: 0,
+          // y: 30,
+          onComplete: function() {
+            done();
+          }
+        });
       }
     }
   },
@@ -77,7 +76,6 @@ module.exports = {
   methods: {
 
     init: function() {
-      window.scrollTo(0,0);
       if (_this.$$.content.querySelectorAll('iframe').length) {
         _this.appendElement(_this.post.title, _this.post.custom_fields.surtitre, _this.post.content);
         _this.loadIframes(_this.$$.content.querySelectorAll('iframe'));
@@ -98,9 +96,12 @@ module.exports = {
       var width = event.width;
       var height = event.height;
 
+      _this.$$.background.style.height = height + 'px';
+
       var paddingTop = height - this.$$.titleBlock.offsetHeight - 20;
       if (paddingTop > 0) {
         this.$el.querySelector('div.inner').style.paddingTop = paddingTop + 'px';
+        this.$emit('contentResized');
       }
     },
 
@@ -124,13 +125,15 @@ module.exports = {
       var tl = new TimelineMax();
       tl.set(this.$$.content, {
         display: 'block',
+        autoAlpha: 1,
       }).to(this.$el, 1, {
         autoAlpha: 1,
         y: 0,
         delay: 1.5
-      }).to(this.$$.content, 0.5, {
+      })
+      .to(this.$$.content, 0.5, {
         autoAlpha: 1,
-        onComplete:function(){
+        onComplete: function() {
           _this.$emit('viewContentLoaded');
         }
       });
@@ -143,10 +146,10 @@ module.exports = {
      * @return {[type]} [description]
      */
     getPost: function() {
-      var self = this;
 
       if (this.posts) {
         this.post = this.posts.filter(this.filterBySlug)[0];
+
       }
     },
 
