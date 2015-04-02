@@ -94,7 +94,7 @@ module.exports = {
   tamere: function() {
     raf(this.tamere.bind(this));
 
-    this.currentY += (this.targetY - this.currentY) * this.ease;
+    this.currentY += ((this.targetY - this.currentY)) * this.ease;
 
     TweenMax.set(this.content, {
       force3D: true,
