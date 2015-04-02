@@ -16,9 +16,7 @@ module.exports = {
     this.currentY = 0;
     this.targetY = 0;
     this.target = this.expression;
-    if (this.el.classList.contains('single-post')) {
-      this.cover = document.querySelector('.background-home');
-    }
+
 
 
 
@@ -28,6 +26,28 @@ module.exports = {
     });
   },
 
+  unbind: function() {
+    // do clean up work
+    // e.g. remove event listeners added in bind()
+
+    console.log(this.vs);
+    console.log(this.moveRaf);
+    this.vs = null;
+    raf.cancel(this.moveRaf);
+    this.moveRaf = null;
+    console.log('unbind');
+    console.log(this.vs);
+    console.log(this.moveRaf);
+
+    if (this.cover !== undefined) {
+      TweenMax.to(this.cover, 1,{
+        force3D:true,
+        y: 0,
+        ease: Cubic.easeInOut
+      });
+    }
+  },
+
   /**
    * When all is really ready :-)
    */
@@ -35,7 +55,12 @@ module.exports = {
     var _this = this;
 
     this.content = this.el.querySelector(this.target);
-    
+
+    if (this.el.classList.contains('single-post')) {
+      this.cover = document.querySelector('.background-home');
+    }
+
+
 
     this.vm.$on('viewContentLoaded', function() {
       _this.contentHeight = _this.content.offsetHeight;
@@ -49,15 +74,15 @@ module.exports = {
   createVS: function() {
     var _this = this;
 
-    var vs = new VirtualScroll();
+    this.vs = new VirtualScroll();
     var vsOptions = {
       keyStep: 100,
       target: this.el
     };
 
-    vs.options(vsOptions);
+    this.vs.options(vsOptions);
 
-    vs.on(function(e) {
+    this.vs.on(function(e) {
       _this.targetY += e.deltaY;
       _this.targetY = Math.max((_this.contentHeight - window.innerHeight) * -1, _this.targetY);
       _this.targetY = Math.min(0, _this.targetY);
@@ -67,7 +92,7 @@ module.exports = {
   },
 
   move: function() {
-    raf(this.move.bind(this));
+    this.moveRaf = raf(this.move.bind(this));
 
     this.currentY += (this.targetY - this.currentY) * this.ease;
 
@@ -76,7 +101,7 @@ module.exports = {
       y: this.currentY
     });
 
-    if (this.cover!==undefined) {
+    if (this.cover !== undefined) {
       TweenMax.set(this.cover, {
         force3D: true,
         y: this.currentY / 5

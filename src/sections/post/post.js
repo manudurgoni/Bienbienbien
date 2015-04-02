@@ -45,7 +45,8 @@ module.exports = {
 
   },
 
-  beforeDestroy: function() {},
+  beforeDestroy: function() {
+  },
 
   transitions: {
     appear: {
@@ -134,6 +135,8 @@ module.exports = {
         }
       });
     },
+
+
 
     /**
      * Get a post from slug
