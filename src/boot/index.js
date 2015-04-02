@@ -17,20 +17,16 @@
 var Vue = require('vue');
 var forEach = require('forEach');
 var DataManager = require('../utils/data-manager');
-
-// Environment
-var dev = false;
-var wp_url = 'http://192.168.1.158/bienbienbien/wordpress';
-// var wp_url = 'http://wp.bienbienbien.dev';
+var conf = require('./conf.js');
 
 // Datas
-var get_posts_url = wp_url + '/api/get_posts/';
-var get_background_url = wp_url + '/wp-admin/admin-ajax.php?action=get_custom_background_infos';
-var get_slack_posts = wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
-var get_slack_members = wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
+var get_posts_url = conf.wp_url + '/api/get_posts/';
+var get_background_url = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_custom_background_infos';
+var get_slack_posts = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
+var get_slack_members = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
 var datas = {};
 
-//Dom
+// Dom
 var transitionShape = document.querySelector('.loader');
 var headerBBB = document.querySelector('header.bbb');
 var cubes = headerBBB.querySelectorAll('.cube');
@@ -74,6 +70,7 @@ function init() {
     components: {
       /* COMPONENTs */
       'slack-component': require('../components/slack/slack'),
+      'menu-component': require('../components/menu/menu'),
 
       /* SECTIONS */
       'home-section': require('../sections/home/home'),
@@ -132,7 +129,7 @@ function loadData() {
     var tlTransitionShape = new TimelineMax();
 
 
-    if (dev) {
+    if (conf.dev) {
       tlTransitionShape.set(headerBBB, {
         display: 'none'
       }).set(transitionShape, {

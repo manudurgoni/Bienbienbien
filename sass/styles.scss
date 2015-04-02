@@ -33,6 +33,9 @@
     Loader, etc
  */
 @import "components/loader";
+@import "src/components/menu/menu";
+@import "src/components/slack/slack";
+
 
 @import "base/base";
 
@@ -42,4 +45,3 @@
 @import "src/sections/home/home";
 @import "src/sections/about/about";
 @import "src/sections/post/post";
-@import "src/components/slack/slack";

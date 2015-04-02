@@ -125,13 +125,17 @@ header.bbb{
     height: 100%;
     margin-left: 290px;
     position: relative;
+    transform: translate3d(0,0,0);
+    z-index: 1;
+    overflow: hidden;
     
     
     .background-home{
         position: fixed;
         top: 0;bottom: 0;
-        left: 290px;right: 0;
-        overflow: hidden;        
+        left: 0px;right: 0;
+        overflow: hidden;  
+        background-color: #000;      
 
         &:before{
             display: block;

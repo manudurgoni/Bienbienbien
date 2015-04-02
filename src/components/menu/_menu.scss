@@ -1,0 +1,29 @@
+.menu-component{
+	.menu-button{
+		position: absolute;
+	  top: 25px;
+	  right: 25px;
+	  z-index: 10;
+	  cursor: pointer;
+
+	  >span{
+	  	display: block;
+	  	width: 43px;
+	  	height: 5px;
+	  	margin-bottom: 9px;
+	  	background-color: #fff;
+	  }
+	}
+
+	.menu-panel{
+		position: absolute;
+	  top: 0;
+	  right: 0;
+	  width: 290px;
+	  height: 100%;
+	  background: #fff;
+	  color: #000;
+	  z-index: 0;
+	  transform: translate3d(120px,0px,0px);
+	}
+}

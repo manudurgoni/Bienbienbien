@@ -43,36 +43,20 @@ module.exports = {
     var tl = new TimelineMax();
 
 
-    var imgs = this.$el.querySelectorAll('img');
-    var imgLoaded = 0;
 
-    if (imgs.length) {
-      forEach(imgs, function(img, i) {
-        img.addEventListener('load', function() {
-          imgLoaded++;
-
-          if (imgLoaded === imgs.length - 1) {
-            _this.$emit('viewContentLoaded');
-          }
-        });
+    tl.set(this.$el, {
+        autoAlpha: 0,
+        y: -30,
+        xPercent: -50,
+      })
+      .to(this.$el, 0.7, {
+        autoAlpha: 1,
+        y: 0,
+        delay: 1,
+        onComplete: function() {
+          _this.$emit('viewContentLoaded');
+        }
       });
-    } else {
-      tl.set(this.$el, {
-          autoAlpha: 0,
-          y: -30,
-          xPercent: -50,
-        })
-        .to(this.$el, 0.7, {
-          autoAlpha: 1,
-          y: 0,
-          delay: 1,
-          onComplete: function() {
-            _this.$emit('viewContentLoaded');
-            console.log('ok')
-
-          }
-        });
-    }
   },
 
   beforeDestroy: function() {},
