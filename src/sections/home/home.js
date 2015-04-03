@@ -55,13 +55,13 @@ module.exports = {
       .to(this.menuBtnBlackLayer, 0.5, {
         height: 0,
       }, '+=1')
-      .staggerTo(this.articles, 1, {
+      .to(this.articles, 1, {
         autoAlpha: 1,
         y: 0,
-        ease: Power3.easeOut,
-      }, 0.15, '+=0.5', function() {
-        _this.$emit('viewContentLoaded');
-      });
+        onComplete:function(){
+          _this.$emit('viewContentLoaded');
+        }
+      }, '+=0.5');
 
 
   },

@@ -33,14 +33,25 @@ module.exports = {
   },
 
   ready: function() {
-
-    TweenMax.set(this.$el, {
+    var tl = new TimelineMax();
+    tl.set(this.$$.inner, {
       autoAlpha: 0,
-      y: 30
+      scale:0.99,
+      y: 50
     });
 
+    // Background animation
     this.backgroundDiv = this.$$.background.querySelector('div');
-    this.backgroundDiv.style.backgroundImage = 'url(' + this.post.thumbnail_images.cover.url + ')';
+    
+    tl.set(this.backgroundDiv, {
+      autoAlpha: 0,
+      scale: 1.05,
+      backgroundImage: 'url(' + this.post.thumbnail_images.cover.url + ')'
+    }).to(this.backgroundDiv, 1,{
+      autoAlpha:1,
+      scale:1,
+      ease: Cubic.easeInOut
+    });
 
     setTimeout(function() {
       _this.init();
@@ -57,18 +68,18 @@ module.exports = {
       },
       leave: function(el, done) {
         var tl = new TimelineMax();
+        console.log(_this.backgroundDiv,el.querySelector('.inner'));
 
-        tl.to(_this.backgroundDiv, 0.6, {
+        tl.to(_this.backgroundDiv, 1, {
           autoAlpha: 0,
-          scale: 1.02,
           ease: Cubic.easeInOut
-        }, '+=0.2').to(el, 1, {
+        }).to(el.querySelector('.inner'), 1, {
+          scale:0.99,
           autoAlpha: 0,
-          // y: 30,
           onComplete: function() {
             done();
           }
-        });
+        },'-=0.8');
       }
     }
   },
@@ -98,7 +109,10 @@ module.exports = {
 
       _this.$$.background.style.height = height + 'px';
 
-      var paddingTop = height - this.$$.titleBlock.offsetHeight - 20;
+
+      var h = (!this.addHeight)?300:0;
+
+      var paddingTop = height - this.$$.titleBlock.offsetHeight - 80 + h;
       if (paddingTop > 0) {
         this.$el.querySelector('div.inner').style.paddingTop = paddingTop + 'px';
         this.$emit('contentResized');
@@ -123,20 +137,25 @@ module.exports = {
     showContent: function() {
       window.dispatchEvent(new Event('resize'));
       var tl = new TimelineMax();
-      tl.set(this.$$.content, {
-        display: 'block',
+      tl.set(this.$$.titleBlock,{
+        height:'+=300',
+        y:300
+      }).to(this.$$.inner, 1, {
         autoAlpha: 1,
-      }).to(this.$el, 1, {
-        autoAlpha: 1,
+        scale:1,
         y: 0,
-        delay: 1.5
+        delay: 1.5,
+        
+        // ease: Cubic.easeOut
       })
-      .to(this.$$.content, 0.5, {
-        autoAlpha: 1,
-        onComplete: function() {
+      .to(this.$$.titleBlock, 0.7,{
+        height:'-=300',
+        y:0,
+        onComplete: function(){
+          _this.addHeight = true;
           _this.$emit('viewContentLoaded');
         }
-      });
+      }, '-=1');
     },
 
 

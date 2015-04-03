@@ -21,42 +21,42 @@
 
 		&:hover{
 			h1{
-				padding-left: 6px;
-				&:before{
-					width: 10px;
+				.highlight:before{
+					height: 100%;
 				}
 			}
 		}
-	
+		$title-pad: 0.25em;
+		$color-white: #fff;
 		h1{
 			font-weight: bold;
-			font-size: em(45);
-			line-height: 50px;
+			font-size: 36px/1.25;
+			line-height: $title-pad + 1em;
 			position: relative;
 			transition: all 0.5s $ease-cubic-in-out;
-
-			&:before{
-				content: "";
-				display: block;
-				position: absolute;
-				left: 0;
-				top: -1px;
-				bottom: 0;
-				width: 0;
-				background-color: $yellow;
-				transition: all 0.6s $ease-cubic-in-out;
-			}
-
+			
 			.highlight {
 		    display: inline;
-			  background-color: #fff;
+			  background-color: $color-white;
 			  color: #000;
-			  padding-left: 15px;
-			  padding-right: 15px;
-		    -webkit-box-decoration-break: clone;
-		    -ms-box-decoration-break: clone;
-		    -o-box-decoration-break: clone;
+			  padding: $title-pad;
+		    position: relative;
+		    left: $title-pad;
+		    padding-left: 0;
+		    box-shadow: $title-pad 0 0 $color-white, $title-pad*-1 0 0 $color-white;
 		    box-decoration-break: clone;
+
+		    &:before{
+					content: "";
+					display: block;
+					position: absolute;
+					left: -$title-pad*2;
+					top: 0px;
+					height: 0%;
+					width: 9px;
+					background-color: $yellow;
+					transition: all 0.5s $ease-cubic-in-out;
+				}
 		  }
 		}
 

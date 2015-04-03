@@ -32,7 +32,7 @@
     <body >
         <div class="loader"></div>
 
-        <header class="bbb">
+        <div class="cubes loading">
             <a href="/">
                 <div class="wrap">
                     <div class="cube">
@@ -55,13 +55,37 @@
                     </div>
                 </div>
             </a>
-        </header>
+        </div>
+
 
         <div v-component="slack-component"></div>
         <div v-component="menu-component"></div>
         
         <div class="global">
-            
+            <header class="cubes">
+                <a href="/">
+                    <div class="wrap">
+                        <div class="cube">
+                            <span class="front">B</span>
+                            <span class="back">B</span>
+                            <span class="top">B</span>
+                            <span class="bottom">B</span>
+                        </div>
+                        <div class="cube">
+                            <span class="front">B</span>
+                            <span class="back">B</span>
+                            <span class="top">B</span>
+                            <span class="bottom">B</span>
+                        </div>
+                        <div class="cube">
+                            <span class="front">B</span>
+                            <span class="back">B</span>
+                            <span class="top">B</span>
+                            <span class="bottom">B</span>
+                        </div>
+                    </div>
+                </a>
+            </header>
 
             <div v-route></div>
         </div>

@@ -17,6 +17,7 @@
 var Vue = require('vue');
 var forEach = require('forEach');
 var DataManager = require('../utils/data-manager');
+var CubeManager = require('../utils/cubes-manager');
 var conf = require('./conf.js');
 
 // Datas
@@ -28,8 +29,8 @@ var datas = {};
 
 // Dom
 var transitionShape = document.querySelector('.loader');
-var headerBBB = document.querySelector('header.bbb');
-var cubes = headerBBB.querySelectorAll('.cube');
+var loadingCubes = document.querySelector('.cubes.loading');
+var cubes = loadingCubes.querySelectorAll('.cube');
 
 
 
@@ -49,6 +50,12 @@ function init() {
         background: {
           background_url: datas.background_url,
           first_background_div: document.querySelector('.background-home').firstChild,
+        },
+        loading: {
+          cube:{
+            cubes:cubes
+          },
+          transitionShape:transitionShape
         }
       };
     },
@@ -135,23 +142,17 @@ function loadData() {
         display: 'none'
       });
     } else {
-      tlTransitionShape.staggerTo(cubes, 1.2, {
-        rotationX: 180,
-        ease: Cubic.easeInOut,
-        repeat: 1,
-        repeatDelay: 0.5
-      }, 0.1, 0.6, function() {}).to(transitionShape, 1.4, {
+
+
+
+      CubeManager.rotateCubes(cubes, 1.2, 180, undefined, 1, 0.5, 0.1, 1, function(){
+        CubeManager.hideCubes(cubes, 0.4, 1);
+      });
+
+      tlTransitionShape.to(transitionShape, 1.4, {
         xPercent: 100,
         ease: Expo.easeInOut,
-        onComplete: function() {}
-      }).to(headerBBB, 0.8, {
-        scale: 1.07,
-        y: -50,
-        autoAlpha: 0,
-        // display:'none',
-        ease: Cubic.easeInOut,
-
-      }, '-=1');
+      }, '+=4');
     }
   });
 };

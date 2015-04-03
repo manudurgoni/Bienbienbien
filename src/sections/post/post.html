@@ -1,11 +1,11 @@
 <div class="section single-post" v-transition="appear" v-scroll=".inner">
 	<div class="background-post" v-el="background"><div></div></div>
-	<div class="inner">
+	<div class="inner" v-el="inner">
 	  <div class="title-block" v-el="titleBlock">
 	    <h1 v-el="title"></h1>
 	    <h2 v-el="subtitle"></h2>
 	  </div>
 
-	  <div class="content"><div v-el="content"></div></div>
+	  <div class="content" v-el="wrapperContent"><div v-el="content"></div></div>
 	</div>
 </div>

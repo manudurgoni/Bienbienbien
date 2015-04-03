@@ -29,11 +29,11 @@ module.exports = {
     this.moveRaf = null;
 
     if (this.cover !== undefined) {
-      TweenMax.to(this.cover, 1, {
-        force3D: true,
-        y: 0,
-        ease: Cubic.easeInOut
-      });
+      // TweenMax.to(this.cover, 1, {
+      //   force3D: true,
+      //   // y: 0,
+      //   ease: Cubic.easeInOut
+      // });
     }
   },
 
