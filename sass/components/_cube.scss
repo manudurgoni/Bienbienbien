@@ -1,0 +1,80 @@
+/**
+ * BBB Logo
+ */
+.cubes{
+    position: absolute;
+    margin: auto;
+    font-family: 'Arial';
+    font-size: em(56);
+    line-height: 90px;
+    margin: 0;
+    font-weight: bold;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    z-index: 101;
+
+    a{
+        color: #fff;
+    }
+
+    .wrap {
+        perspective: 1000px;
+        width: 360px;
+        height: 90px;
+
+    }
+    
+    $width:120px;
+    .cube {
+        position: absolute;
+        width: $width;
+        height: 90px;
+        transform-style: preserve-3d;
+        transform: translateZ( -45px );
+
+
+        &:nth-child(1n){
+            left: 0;
+        }
+
+        &:nth-child(2n){
+            z-index: 1;
+            left: $width;
+        }
+
+        &:nth-child(3n){
+            left: $width * 2;
+        }
+    }
+
+
+    .cube > span {
+        background-color: red;
+        display: block;
+        position: absolute;
+        height: 90px;
+        width: 120px;
+
+        &.front {
+            transform: rotateY( 0deg ) translateZ( 45px );
+            background-color: red;
+        }
+
+        &.back {
+            transform: rotateX( 180deg ) translateZ( 45px );
+        }
+        
+        &.top {
+            transform: rotateX( 90deg ) translateZ( 45px );
+            background-color: yellow;
+        }
+        &.bottom {
+            transform: rotateX( -90deg ) translateZ( 45px );
+            background-color: blue;
+        }
+        
+    }
+}
