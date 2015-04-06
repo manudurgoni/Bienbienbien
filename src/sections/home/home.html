@@ -4,8 +4,8 @@
       <h1><span class="highlight">{{{ title }}}</span></h1>
       <h2>{{{ custom_fields.surtitre }}}</h2>
     </a>
-
-    <div class="more" v-el="moreBtn" v-on="mouseenter:moreBtnOnMouseEnter, mouseleave:moreBtnOnMouseLeave, click:moreBtnOnClick">
+		
+    <div v-if="!allIsLoaded" class="more" v-el="moreBtn" v-on="mouseenter:moreBtnOnMouseEnter, mouseleave:moreBtnOnMouseLeave, click:moreBtnOnClick">
     	<span class="bar bar-1"></span>
     	<span class="bar bar-2"></span>
     	<span class="circle circle-1"></span>

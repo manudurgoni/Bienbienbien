@@ -5,6 +5,7 @@ var DataManager = require('../../utils/data-manager');
 var CubeManager = require('../../utils/cubes-manager');
 var resizeMixin = require('vue-resize-mixin');
 var conf = require('../../boot/conf.js');
+var forEach = require('forEach');
 
 var get_posts_url = conf.wp_url + '/api/get_posts/';
 
@@ -22,7 +23,9 @@ module.exports = {
   },
 
   data: function() {
-    return {};
+    return {
+      allIsLoaded: false
+    };
   },
 
   transitions: {
@@ -32,24 +35,35 @@ module.exports = {
       },
       leave: function(el, done) {
         var tl = new TimelineMax();
-        tl.to(el, 1, {
-          autoAlpha: 0,
-          y: 30,
-          onComplete: function() {
-            done();
-          }
-        });
+        tl.set(this.loading.transitionShape, {
+            display: 'block',
+            xPercent: 100,
+            width:window.innerWidth
+          })
+          .to(el, 1, {
+            autoAlpha: 0,
+            y: 30,
+          })
+          .to(this.loading.transitionShape, 1, {
+            xPercent: 0,
+            ease: Expo.easeInOut,
+          })
+          .to(this.loading.transitionShape, 1, {
+            width: 0,
+            ease: Expo.easeInOut,
+            onComplete: function() {
+              done();
+            }
+          });
+
+
         this.$dispatch('menuOut');
 
-        CubeManager.showCubes(this.loading.loadingCubes, 0.4, 1, 0, 0, function() {
-          CubeManager.rotateCubes(_this.loading.cubes, 0.7, 180, undefined, 1, 0.5, 0.1, 1);
-        });
+        // CubeManager.showCubes(this.loading.loadingCubes, 0.4, 1, 0, 0, function() {
+        //   CubeManager.rotateCubes(_this.loading.cubes, 0.7, 180, undefined, 1, 0.5, 0.1, 1);
+        // });
 
 
-        // tlTransitionShape.to(this.loading.transitionShape, 1.4, {
-        //   xPercent: 100,
-        //   ease: Expo.easeInOut,
-        // }, '+=4');
       }
     }
   },
@@ -60,6 +74,10 @@ module.exports = {
     //Background vars
     this.tlBackground = new TimelineMax();
     this.timeoutBg = null;
+
+    if (this.paginate.currentPage === this.paginate.nbPages) {
+      this.allIsLoaded = true;
+    }
   },
 
   ready: function() {
@@ -67,6 +85,10 @@ module.exports = {
     this.menuBtn = document.querySelector('.menu-button');
     this.menuBtnBlackLayer = this.menuBtn.querySelector('.black');
     this.articles = this.$el.querySelectorAll('.post');
+
+    if (!this.allIsLoaded) {
+      this.initTimelineMoreBtn();
+    }
 
     tl.set(this.$el, {
         autoAlpha: 1,
@@ -100,9 +122,10 @@ module.exports = {
     /**
      * More button
      */
-    moreBtnOnMouseEnter: function(e) {
-
-      this.moreBtnHoverTl = new TimelineMax();
+    initTimelineMoreBtn: function() {
+      this.moreBtnHoverTl = new TimelineMax({
+        'paused': true
+      });
 
       this.moreBtnHoverTl.to(this.$$.moreBtn.querySelector('.circle-1'), 0.6, {
           scale: 0.8,
@@ -120,19 +143,11 @@ module.exports = {
           rotation: 180,
           ease: Cubic.easeInOut
         }, '-=0.9');
-    },
 
-    moreBtnOnMouseLeave: function() {
 
-      if (!this.moreBtnClicked) {
-        this.moreBtnHoverTl.reverse();
-      }
-    },
-
-    moreBtnOnClick: function(e) {
-      this.moreBtnClicked = true;
-
-      this.moreBtnClickTl = new TimelineMax();
+      this.moreBtnClickTl = new TimelineMax({
+        'paused': true
+      });
       this.moreBtnClickTl
         .set(this.$$.moreBtn.querySelector('.dot'), {
           scale: 0,
@@ -147,26 +162,88 @@ module.exports = {
         .to(this.$$.moreBtn.querySelector('.dot'), 0.5, {
           scale: 1,
         }, '-=0.4')
-        .to(this.$$.moreBtn.querySelector('.dot'), 2, {
+        .to(this.$$.moreBtn.querySelector('.dot'), 1.5, {
           rotation: 360,
           repeat: -1,
           ease: Linear.easeNone
         }, '-=0.4');
+    },
 
-      console.log(get_posts_url);
+    moreBtnOnMouseEnter: function(e) {
+
+      this.moreBtnHoverTl.play();
+    },
+
+    moreBtnOnMouseLeave: function() {
+
+      if (!this.moreBtnClicked) {
+        this.moreBtnHoverTl.reverse();
+      }
+    },
+
+    moreBtnOnClick: function(e) {
 
       if (this.paginate.currentPage < this.paginate.nbPages) {
+        this.moreBtnClicked = true;
+        this.moreBtnHoverTl.play();
+        this.moreBtnClickTl.play();
+
         this.paginate.currentPage++;
 
-        console.log(get_posts_url+'?page='+this.paginate.currentPage);
-        DataManager.getJsons([get_posts_url+'?page='+this.paginate.currentPage]).then(function(response) {
-          _this.posts = response[0].posts;
-          _this.moreBtnClickTl.pause();
-          console.log(_this.posts);
+        DataManager.getJsons([get_posts_url + '?page=' + this.paginate.currentPage]).then(function(response) {
+
+          TweenMax.delayedCall(2, function() {
+            // _this.moreBtnClickTl.reverse();
+            // _this.moreBtnHoverTl.reverse();
+
+            _this.moreBtnClickTl.pause();
+
+            var tl = new TimelineMax();
+            tl.to(_this.$$.moreBtn.querySelector('.dot'), 0.8, {
+                scale: 0,
+                rotation: 0,
+                onComplete: function() {
+                  _this.moreBtnHoverTl.reverse();
+                  _this.moreBtnClicked = false;
+                  _this.moreBtnClickTl.seek(0);
+                }
+              })
+              .to(_this.$$.moreBtn.querySelectorAll('.bar'), 0.8, {
+                scale: 1,
+                autoAlpha: 1,
+                onComplete: function() {
+                  forEach(response[0].posts, function(newPost, index) {
+                    _this.addPost(newPost);
+                  });
+                }
+              }, '-=0.5')
+
+            // .to(this.$$.moreBtn.querySelectorAll('.bar'), 0.5, {
+            //   scale: 0.3,
+            //   autoAlpha: 0
+            // })
+
+            // .to(this.$$.moreBtn.querySelector('.dot'), 2, {
+            //   rotation: 360,
+            //   repeat: -1,
+            //   ease: Linear.easeNone
+            // }, '-=0.4');
+          });
+        });
+      } else {
+        TweenMax.to(this.$$.moreBtn, 0.8, {
+          y: 50,
+          autoAlpha: 0,
+          onComplete: function() {
+            _this.allIsLoaded = true;
+          }
         });
       }
+    },
 
-
+    addPost: function(newPost) {
+      this.posts.push(newPost);
+      this.$emit('contentResized');
     }
   }
 };
