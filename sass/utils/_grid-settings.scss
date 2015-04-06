@@ -1,4 +1,5 @@
 @import "base/variables";
+@import "neat/neat-helpers";
 
 $column: 127px;
 $gutter: 10px;
@@ -12,6 +13,7 @@ $visual-grid-index: front;
 $visual-grid-color: #1abc9c;
 
 $mobile: new-breakpoint(max-width 640px 4);
-$tablet: new-breakpoint(min-width 990px 10);
-$desktop: new-breakpoint(min-width 1230px 10);
-$large-screen: new-breakpoint(min-width 1400px 10);
+$phablet: new-breakpoint(max-width 990px 4);
+$tablet: new-breakpoint(max-width 1024px 10);
+$desktop: new-breakpoint(max-width 1200px 10);
+$largeScreen: new-breakpoint(max-width 1440px 10);

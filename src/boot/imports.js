@@ -22,5 +22,5 @@ TweenLite.defaultEase = Expo.easeOut; // So I don't have to write it every time
  */
 Vue.directive('viewport', viewport);
 Vue.use(route);
-// Vue.config.debug = true;
+Vue.config.debug = true;
 

@@ -3,6 +3,8 @@
 var Vue = require('vue');
 var raf = require('component-raf');
 var VirtualScroll = require('../utils/virtual-scroll.js');
+var LazyLoad = require('../utils/lazy-load.js');
+var Breakpoints = require('../utils/breakpoints.js');
 var TweenMax = require('TweenMax');
 var forEach = require('forEach');
 
@@ -27,14 +29,6 @@ module.exports = {
     this.vs = null;
     raf.cancel(this.moveRaf);
     this.moveRaf = null;
-
-    if (this.cover !== undefined) {
-      // TweenMax.to(this.cover, 1, {
-      //   force3D: true,
-      //   // y: 0,
-      //   ease: Cubic.easeInOut
-      // });
-    }
   },
 
 
@@ -47,8 +41,8 @@ module.exports = {
    */
   ready: function() {
     var _this = this;
-
     this.content = this.el.querySelector(this.target);
+
 
     this.menuBtn = document.querySelector('.menu-button');
     this.menuBtnHeight = this.menuBtn.offsetHeight;
@@ -64,12 +58,19 @@ module.exports = {
 
     this.vm.$on('viewContentLoaded', function() {
       _this.contentHeight = _this.content.offsetHeight;
+      _this.createLZ();
       _this.createVS();
-    })
+    });
 
     this.vm.$on('contentResized', function() {
       _this.contentHeight = _this.content.offsetHeight;
-    })
+      _this.isPhablet = (window.innerWidth < Breakpoints.phablet)?true:false;
+    });
+  },
+
+  createLZ: function() {
+    var _this = this;
+    this.lz = new LazyLoad(_this.content);
   },
 
   /**
@@ -77,12 +78,16 @@ module.exports = {
    */
   createVS: function() {
     var _this = this;
-
     this.vs = new VirtualScroll();
     var vsOptions = {
-      keyStep: 100,
+      keyStep: 200,
       target: this.el
     };
+
+    // if (_this.cover !== undefined) {
+    //   _this.el.focus();
+    //   console.log('focus');
+    // }
 
     this.vs.options(vsOptions);
 
@@ -90,10 +95,18 @@ module.exports = {
       _this.targetY += e.deltaY;
       _this.targetY = Math.max((_this.contentHeight - window.innerHeight) * -1, _this.targetY);
       _this.targetY = Math.min(0, _this.targetY);
+      
+      if (_this.lz.valid) {
+        _this.lz.check();
+      }
+
     });
 
     this.move();
   },
+
+
+
 
   move: function() {
     this.moveRaf = raf(this.move.bind(this));
@@ -106,7 +119,10 @@ module.exports = {
     });
 
     if (this.cover !== undefined) {
-      if (this.currentY < -(this.contentPost.offsetTop - this.menuBtnHeight - this.menuBtn.offsetTop)) {
+
+
+
+      if (this.currentY < -(this.contentPost.offsetTop - this.menuBtnHeight - this.menuBtn.offsetTop) && !this.isPhablet) {
         this.heightLayerMenu += ((this.targetY - this.currentY)) * this.ease;
 
         TweenMax.set(this.menuBtnBlackLayer, {

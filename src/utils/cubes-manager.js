@@ -26,16 +26,16 @@ module.exports = {
 
     var tl = new TimelineMax();
     tl.staggerTo(el, duration, {
-      rotationX: 180,
+      rotationX: rotationX,
+      rotationY: rotationY,
       ease: Cubic.easeInOut,
       repeat: nbRepeat,
       repeatDelay: nbRepeat,
-      onComplete: cb
-    }, stagger, delay);
+    }, stagger, delay, cb);
   },
 
-  hideCubes: function(el, duration, scale, y, delay) {
-  	duration = duration || 1;
+  hideCubes: function(el, duration, scale, y, delay, cb) {
+    duration = duration || 1;
     scale = scale || 1;
     y = y || 0;
     delay = delay || 0;
@@ -47,16 +47,32 @@ module.exports = {
       scale: scale,
       y: y,
       autoAlpha: 0,
+      display: 'none',
       ease: Cubic.easeInOut,
-    }, delay);
+      onComplete: cb
+    }, delay).set(el.querySelectorAll('.cube'), {
+      rotationX: 0,
+      rotationY: 0
+    });
+
   },
 
-  showcubes: function(el, duration, delay) {
+  showCubes: function(el, duration, scale, y, delay, cb) {
+    duration = duration || 1;
+    scale = scale || 1;
+    y = y || 0;
+    delay = delay || 0;
+
+
+    var tl = new TimelineMax();
+
     tl.to(el, duration, {
-      scale: 1,
-      y: 0,
+      scale: scale,
+      y: y,
       autoAlpha: 1,
+      display: 'block',
       ease: Cubic.easeInOut,
+      onComplete: cb
     }, delay);
   },
 

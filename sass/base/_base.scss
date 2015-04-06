@@ -17,7 +17,7 @@ body {
 
 
 
-[v-cloak] {
+[v-cloak], #iframes-loader {
     display: none;
 }
 
@@ -49,6 +49,10 @@ ul, li {
     transform: translate3d(0,0,0);
     z-index: 1;
     overflow: hidden;
+
+    @include media($phablet){
+        margin-left: 0px;
+    }
     
     
     .background-home{

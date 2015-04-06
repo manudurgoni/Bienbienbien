@@ -23,8 +23,12 @@ var conf = require('./conf.js');
 // Datas
 var get_posts_url = conf.wp_url + '/api/get_posts/';
 var get_background_url = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_custom_background_infos';
-var get_slack_posts = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
-var get_slack_members = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
+
+
+// var get_slack_posts = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
+// var get_slack_members = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
+var get_slack_posts = '/assets/data/channel.json';
+var get_slack_members = '/assets/data/members.json';
 var datas = {};
 
 // Dom
@@ -44,6 +48,10 @@ function init() {
     el: 'body',
     data: function() {
       return {
+        paginate:{
+          currentPage:1,
+          nbPages:datas.nbPages
+        }, 
         posts: datas.posts,
         msgs: datas.msgs,
         members: datas.members,
@@ -52,9 +60,8 @@ function init() {
           first_background_div: document.querySelector('.background-home').firstChild,
         },
         loading: {
-          cube:{
-            cubes:cubes
-          },
+          loadingCubes: loadingCubes,
+          cubes:cubes,
           transitionShape:transitionShape
         }
       };
@@ -124,6 +131,7 @@ function createBackground() {
 
 function loadData() {
   DataManager.getJsons([get_posts_url, get_slack_posts, get_slack_members, get_background_url]).then(function(response) {
+    datas.nbPages = response[0].pages;
     datas.posts = response[0].posts;
     datas.msgs = response[1].data.messages;
     datas.members = response[2].data.members;
@@ -136,17 +144,15 @@ function loadData() {
 
 
     if (conf.dev) {
-      tlTransitionShape.set(headerBBB, {
+      tlTransitionShape.set(loadingCubes, {
         display: 'none'
       }).set(transitionShape, {
         display: 'none'
       });
     } else {
 
-
-
       CubeManager.rotateCubes(cubes, 1.2, 180, undefined, 1, 0.5, 0.1, 1, function(){
-        CubeManager.hideCubes(cubes, 0.4, 1);
+        CubeManager.hideCubes(loadingCubes, 0.4, 1);
       });
 
       tlTransitionShape.to(transitionShape, 1.4, {

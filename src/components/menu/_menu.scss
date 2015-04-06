@@ -1,16 +1,38 @@
 .menu-component {
+  .top-bar {
+    width: 100%;
+    z-index: 5;
+    position: relative;
+
+    @include media($phablet) {
+      height: 50px;
+      background-color: #ff0000;
+      
+    }
+    
+
+  }
   .menu-button {
     position: absolute;
     top: 25px;
     right: 25px;
     z-index: 10;
     cursor: pointer;
+    @include media($phablet) {
+      top: 10px;
+      right: 15px;
+    }
     >span {
       display: block;
       width: 43px;
       height: 5px;
       margin-bottom: 9px;
       background-color: #fff;
+      @include media($phablet) {
+        width: 35px;
+        height: 5px;
+        margin-bottom: 7px;
+      }
       &:nth-child(3n) {
         margin-bottom: 0;
       }
@@ -22,6 +44,9 @@
       height: 0px;
       width: 43px;
       overflow: hidden;
+      @include media($phablet) {
+        width: 35px;
+      }
       >div {
         position: absolute;
         bottom: 0px;
@@ -33,6 +58,11 @@
           background-color: #000;
           &:nth-child(3n) {
             margin-bottom: 0;
+          }
+          @include media($phablet) {
+            width: 35px;
+            height: 6px;
+            margin-bottom: 6px;
           }
         }
       }

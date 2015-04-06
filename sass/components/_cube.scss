@@ -1,80 +1,215 @@
 /**
  * BBB Logo
  */
-.cubes{
-    position: absolute;
-    margin: auto;
-    font-family: 'Arial';
-    font-size: em(56);
-    line-height: 90px;
-    margin: 0;
-    font-weight: bold;
-    transform: translate(-50%,-50%);
-    top: 50%;
-    left: 50%;
-    -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: grayscale;
-    z-index: 101;
 
-    a{
-        color: #fff;
-    }
+$widthLoading: 120px;
+$heightLoader: 90px;
+$widthHeader: 45px;
+$widthHeaderMobile: 35px;
+$heightHeader: 40px;
+$heightHeaderMobile: 35px;
 
-    .wrap {
-        perspective: 1000px;
-        width: 360px;
-        height: 90px;
+.cubes {
+  font-family: 'Arial';
+  font-size: em(56);
+  line-height: 90px;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  z-index: 5;
+  a {
+    color: #fff;
+  }
 
-    }
+  .wrap {
+    perspective: 1000px;
+    width: 360px;
+    height: 90px;
     
-    $width:120px;
     .cube {
-        position: absolute;
-        width: $width;
-        height: 90px;
-        transform-style: preserve-3d;
-        transform: translateZ( -45px );
-
-
-        &:nth-child(1n){
-            left: 0;
-        }
-
-        &:nth-child(2n){
-            z-index: 1;
-            left: $width;
-        }
-
-        &:nth-child(3n){
-            left: $width * 2;
-        }
-    }
-
-
-    .cube > span {
+      position: absolute;
+      width: $widthLoading;
+      height: 90px;
+      transform-style: preserve-3d;
+      transform: translateZ( -45px);
+      
+      &:nth-child(1n) {
+        left: 0;
+      }
+      
+      &:nth-child(2n) {
+        z-index: 1;
+        left: $widthLoading;
+      }
+      
+      &:nth-child(3n) {
+        left: $widthLoading * 2;
+      }
+      
+      > span {
         background-color: red;
         display: block;
         position: absolute;
         height: 90px;
         width: 120px;
-
-        &.front {
-            transform: rotateY( 0deg ) translateZ( 45px );
-            background-color: red;
-        }
-
-        &.back {
-            transform: rotateX( 180deg ) translateZ( 45px );
-        }
         
+        &.front {
+          transform: rotateY( 0deg) translateZ( 45px);
+          background-color: red;
+        }
+        &.back {
+          transform: rotateX( 180deg) translateZ( 45px);
+        }
         &.top {
-            transform: rotateX( 90deg ) translateZ( 45px );
-            background-color: yellow;
+          transform: rotateX( 90deg) translateZ( 45px);
+          background-color: yellow;
         }
         &.bottom {
-            transform: rotateX( -90deg ) translateZ( 45px );
-            background-color: blue;
+          transform: rotateX( -90deg) translateZ( 45px);
+          background-color: blue;
+        }
+      }
+    }
+  }
+  
+  &.loading {
+    position: absolute;
+    margin: auto;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    -webkit-font-smoothing: none;
+    z-index: 101;
+
+  }
+  
+  &.header {
+    position: absolute;
+    top: 25px;
+    left: 315px;
+    font-size: em(25);
+    line-height: $heightHeader;
+    text-align: center;
+
+    @include media($phablet){
+      font-size: em(30);
+      top: 7.5px;
+      left: 10px;
+      line-height: $heightHeaderMobile;
+    }
+
+    .wrap {
+      perspective: 700px;
+      width: $widthHeader*3;
+      height: $heightHeader;
+
+      @include media($phablet){
+        perspective: 2000px;
+        width: $widthHeaderMobile*3;
+        height: $heightHeaderMobile;
+      }
+
+      &:hover{
+        .cube:nth-child(1n) {
+          transform: rotateX(-180deg);
+          transition-delay:0ms;
         }
         
+        .cube:nth-child(2n) {
+          transform: rotateX(-180deg);
+          transition-delay:100ms;
+        }
+        
+        .cube:nth-child(3n) {
+          transform: rotateX(-180deg);
+          transition-delay:200ms;
+        }
+      }
+      
+      .cube {
+        position: absolute;
+        width: $widthHeader;
+        height: $heightHeader;
+        transform-style: preserve-3d;
+        transform: translateZ( -25px);
+        transition: transform 0.9s $ease-cubic-in-out;
+
+        @include media($phablet){
+          width: $widthHeaderMobile;
+          height: $heightHeaderMobile;
+          transform: translateZ( -20px);
+        }
+        
+        &:nth-child(1n) {
+          left: 0;
+        }
+        
+        &:nth-child(2n) {
+          z-index: 1;
+          left: $widthHeader;
+
+          @include media($phablet){
+            left: $widthHeaderMobile;
+          }
+        }
+        
+        &:nth-child(3n) {
+          left: $widthHeader * 2;
+
+          @include media($phablet){
+            left: $widthHeaderMobile * 2;
+          }
+        }
+        
+        > span {
+          background-color: red;
+          display: block;
+          position: absolute;
+          height: $heightHeader;
+          width: $widthHeader;
+
+          @include media($phablet){
+            width: $widthHeaderMobile;
+            height: $heightHeaderMobile;
+          }
+          
+          &.front {
+            transform: rotateY( 0deg) translateZ( $heightHeader/2);
+            background-color: red;
+
+            @include media($phablet){
+              transform: rotateY( 0deg) translateZ( $heightHeaderMobile/2);
+            }
+          }
+          &.back {
+            transform: rotateX( 180deg) translateZ( $heightHeader/2);
+
+            @include media($phablet){
+              transform: rotateX( 180deg) translateZ( $heightHeaderMobile/2);
+            }
+          }
+          &.top {
+            transform: rotateX( 90deg) translateZ( $heightHeader/2);
+            background-color: yellow;
+            
+            @include media($phablet){
+              transform: rotateX( 90deg) translateZ( $heightHeaderMobile/2);
+            }
+          }
+          &.bottom {
+            transform: rotateX( -90deg) translateZ( $heightHeader/2);
+            background-color: blue;
+            
+            @include media($phablet){
+              transform: rotateX( -90deg) translateZ( $heightHeaderMobile/2);
+            }
+
+          }
+        }
+      }
     }
+  }
+  
+
 }

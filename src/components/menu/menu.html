@@ -1,25 +1,49 @@
 <div class="menu-component">
-	<div class="menu-button" v-el="button" v-on="click:toggleMenu">
-	    <span></span>
-	    <span></span>
-	    <span></span>
-
-	    <div class="black">
-	    	<div>
-		    	<span></span>
-			    <span></span>
-			    <span></span>
-	    	</div>
-	    </div>
-	</div>
-
-	<div class="menu-panel" v-el="panel">
-		<nav>
-			<a href="">Catégorie 1</a>
-			<a href="">Catégorie 2</a>
-			<a href="">Catégorie 3</a>
-			<a href="">Catégorie 4</a>
-			<a href="">Catégorie 5</a>
-		</nav>
-	</div>
+    <div class="top-bar" v-el="navbar">
+        <header class="cubes header" v-el="bbb">
+            <a href="/">
+                <div class="wrap">
+                    <div class="cube">
+                        <span class="front">B</span>
+                        <span class="back">B</span>
+                        <span class="top">B</span>
+                        <span class="bottom">B</span>
+                    </div>
+                    <div class="cube">
+                        <span class="front">B</span>
+                        <span class="back">B</span>
+                        <span class="top">B</span>
+                        <span class="bottom">B</span>
+                    </div>
+                    <div class="cube">
+                        <span class="front">B</span>
+                        <span class="back">B</span>
+                        <span class="top">B</span>
+                        <span class="bottom">B</span>
+                    </div>
+                </div>
+            </a>
+        </header>
+        <div class="menu-button" v-el="button" v-on="click:toggleMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="black">
+                <div>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-panel" v-el="panel">
+        <nav>
+            <a href="">Catégorie 1</a>
+            <a href="">Catégorie 2</a>
+            <a href="">Catégorie 3</a>
+            <a href="">Catégorie 4</a>
+            <a href="">Catégorie 5</a>
+        </nav>
+    </div>
 </div>

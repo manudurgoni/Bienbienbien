@@ -7,6 +7,10 @@
   background: #000;
   color: #fff;
   font-family: 'Courier New';
+
+  @include media($phablet){
+    transform: translate(-290px,0)
+  }
   
   .messages {
     padding: 40px 15px;
