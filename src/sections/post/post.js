@@ -70,19 +70,28 @@ module.exports = {
       },
       leave: function(el, done) {
         var tl = new TimelineMax();
-
         _this.$dispatch('menuOut');
+
         tl.to(_this.backgroundDiv, 1, {
-          autoAlpha: 0,
-          scale: 0.9,
-          ease: Cubic.easeInOut
-        }).to(el.querySelector('.inner'), 1, {
-          scale: 0.99,
-          autoAlpha: 0,
-          onComplete: function() {
-            done();
-          }
-        }, '-=0.8');
+            autoAlpha: 0,
+            scale: 0.95,
+            ease: Cubic.easeInOut
+          })
+          .to(el.querySelector('.inner'), 0.5, {
+            y: 200,
+            ease: Cubic.easeInOut,
+            
+          }, '-=0.7')
+          .to(el.querySelector('.title-block'), 0.6, {
+            y: el.querySelector('.title-block').offsetHeight,
+            autoAlpha: 0,
+            ease: Cubic.easeInOut,
+            onComplete: function() {
+              done();
+            }
+          }, '-=0.7');
+
+
       }
     }
   },
@@ -94,8 +103,6 @@ module.exports = {
       var div = document.createElement('div');
       div.innerHTML = _this.post.content;
 
-      // _this.showContent();
-
       if (div.querySelectorAll('iframe').length) {
         _this.replaceIframeSrc(div.querySelectorAll('iframe'));
         _this.appendElement(_this.post.title, _this.post.custom_fields.surtitre, div.innerHTML);
@@ -103,6 +110,9 @@ module.exports = {
         _this.appendElement(_this.post.title, _this.post.custom_fields.surtitre, _this.post.content);
         _this.showContent();
       }
+
+
+
     },
 
     appendElement: function(title, subtitle, content) {
@@ -165,7 +175,8 @@ module.exports = {
       window.dispatchEvent(new Event('resize'));
 
       //el, duration, scale, y, delay, cb
-      CubeManager.hideCubes(this.loading.loadingCubes, 0.4, 1);
+      this.loading.loadingCubes.classList.remove('show');
+      this.loading.loadingCubes.classList.add('hide');
 
       var tl = new TimelineMax();
       tl.set(this.$$.titleBlock, {
@@ -183,7 +194,7 @@ module.exports = {
         .to(this.$$.titleBlock, 1.2, {
           height: '-=' + _this.$options.heightTitle,
           y: 0,
-          clearProps:'height',
+          clearProps: 'height',
           onComplete: function() {
             _this.addHeight = true;
             _this.$dispatch('menuIn');

@@ -48,10 +48,10 @@ function init() {
     el: 'body',
     data: function() {
       return {
-        paginate:{
-          currentPage:1,
-          nbPages:datas.nbPages
-        }, 
+        paginate: {
+          currentPage: 1,
+          nbPages: datas.nbPages
+        },
         posts: datas.posts,
         msgs: datas.msgs,
         members: datas.members,
@@ -61,8 +61,8 @@ function init() {
         },
         loading: {
           loadingCubes: loadingCubes,
-          cubes:cubes,
-          transitionShape:transitionShape
+          cubes: cubes,
+          transitionShape: transitionShape
         }
       };
     },
@@ -70,6 +70,14 @@ function init() {
     routes: {
       '/': {
         componentId: 'home-section',
+        beforeUpdate: function(path, context, next){
+
+          if(context.componentId === 'post-section'){
+            this.$broadcast( 'post:exit', next);
+          }else{
+            next();
+          }
+        },
         isDefault: true
       },
       '/article/:slug': {
@@ -77,6 +85,10 @@ function init() {
       },
       '/about': {
         componentId: 'about-section'
+      },
+      options: {
+        // click: true,
+        // broadcast:true
       }
     },
 
@@ -151,14 +163,18 @@ function loadData() {
       });
     } else {
 
-      CubeManager.rotateCubes(cubes, 1.2, 180, undefined, 1, 0.5, 0.1, 1, function(){
-        CubeManager.hideCubes(loadingCubes, 0.4, 1);
+      TweenMax.delayedCall(3, function() {
+        loadingCubes.classList.add('hide');
       });
+
+      // CubeManager.rotateCubes(cubes, 1.2, 180, undefined, 1, 0.5, 0.1, 1, function(){
+      //   CubeManager.hideCubes(loadingCubes, 0.4, 1);
+      // });
 
       tlTransitionShape.to(transitionShape, 1.4, {
         xPercent: 100,
         ease: Expo.easeInOut,
-      }, '+=4');
+      }, '+=2.5');
     }
   });
 };

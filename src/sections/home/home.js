@@ -31,26 +31,33 @@ module.exports = {
   transitions: {
     appear: {
       enter: function(el, done) {
-        done();
+        var tl = new TimelineMax();
+
+        tl.to(this.background.first_background_div, 0.2,{
+            scale: 1.05,
+            ease: Cubic.easeInOut,
+          })
+          .to(this.background.first_background_div, 1, {
+            scale: 1,
+            ease: Cubic.easeInOut,
+            onComplete: function() {
+              done();
+            }
+          });
+
+        this.loading.loadingCubes.classList.remove('show');
+        this.loading.loadingCubes.classList.add('hide');
       },
       leave: function(el, done) {
         var tl = new TimelineMax();
         tl.set(this.loading.transitionShape, {
             display: 'block',
             xPercent: 100,
-            width:window.innerWidth
+            width: window.innerWidth
           })
           .to(el, 1, {
             autoAlpha: 0,
             y: 30,
-          })
-          .to(this.loading.transitionShape, 1, {
-            xPercent: 0,
-            ease: Expo.easeInOut,
-          })
-          .to(this.loading.transitionShape, 1, {
-            width: 0,
-            ease: Expo.easeInOut,
             onComplete: function() {
               done();
             }
@@ -58,6 +65,9 @@ module.exports = {
 
 
         this.$dispatch('menuOut');
+
+        this.loading.loadingCubes.classList.remove('hide');
+        this.loading.loadingCubes.classList.add('show');
 
         // CubeManager.showCubes(this.loading.loadingCubes, 0.4, 1, 0, 0, function() {
         //   CubeManager.rotateCubes(_this.loading.cubes, 0.7, 180, undefined, 1, 0.5, 0.1, 1);
@@ -92,7 +102,6 @@ module.exports = {
 
     tl.set(this.$el, {
         autoAlpha: 1,
-        xPercent: -50,
       }).set(this.articles, {
         autoAlpha: 0,
         y: -30,
@@ -108,7 +117,7 @@ module.exports = {
           _this.$dispatch('menuIn');
 
         }
-      }, '+=0.5');
+      });
 
   },
 
