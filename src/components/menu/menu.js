@@ -94,11 +94,7 @@ module.exports = {
       this.tl.staggerTo(this.$$.button.querySelectorAll('span'), 1.2, {
           y: 0,
           ease: Power4.easeInOut,
-        }, -0.05, 0)
-        .to(this.$$.bbb, 1.2, {
-          y: 0,
-          ease: Power4.easeInOut,
-        }, '-=1.2');
+        }, -0.05, 0);
     },
 
     out: function() {
@@ -106,14 +102,10 @@ module.exports = {
         force3D: true
       });
 
-      this.tl.to(this.$$.bbb, 1, {
+      this.tl.staggerTo(this.$$.button.querySelectorAll('span'), 1, {
           y: -75,
           ease: Expo.easeInOut,
-        })
-        .staggerTo(this.$$.button.querySelectorAll('span'), 1, {
-          y: -75,
-          ease: Expo.easeInOut,
-        }, 0.05, '-=0.84')
+        }, 0.05)
 
     },
 

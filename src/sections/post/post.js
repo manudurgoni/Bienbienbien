@@ -72,7 +72,9 @@ module.exports = {
         var tl = new TimelineMax();
         _this.$dispatch('menuOut');
 
-        tl.to(_this.backgroundDiv, 1, {
+        console.log(el);
+
+        tl.to(el.querySelector('.background-post div'), 1, {
             autoAlpha: 0,
             scale: 0.95,
             ease: Cubic.easeInOut
@@ -175,8 +177,8 @@ module.exports = {
       window.dispatchEvent(new Event('resize'));
 
       //el, duration, scale, y, delay, cb
-      this.loading.loadingCubes.classList.remove('show');
-      this.loading.loadingCubes.classList.add('hide');
+      // this.loading.loadingCubes.classList.remove('show');
+      // this.loading.loadingCubes.classList.add('hide');
 
       var tl = new TimelineMax();
       tl.set(this.$$.titleBlock, {

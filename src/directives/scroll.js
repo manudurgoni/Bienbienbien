@@ -7,13 +7,14 @@ var LazyLoad = require('../utils/lazy-load.js');
 var Breakpoints = require('../utils/breakpoints.js');
 var TweenMax = require('TweenMax');
 var forEach = require('forEach');
+var _ = require('../utils/_.js');
 
 
 module.exports = {
   bind: function(value) {
     var _this = this;
 
-    this.ease = 0.1;
+    this.ease = 0.3;
     this.currentY = 0;
     this.targetY = 0;
     this.target = this.expression;
@@ -44,7 +45,7 @@ module.exports = {
     this.content = this.el.querySelector(this.target);
 
 
-    this.menuBtn = document.querySelector('.menu-button');
+    this.menuBtn = document.querySelector('.menu-component__bar__button');
     this.menuBtnHeight = this.menuBtn.offsetHeight;
     this.menuBtnBlackLayer = this.menuBtn.querySelector('.black');
 
@@ -73,6 +74,7 @@ module.exports = {
       _this.contentHeight = _this.content.offsetHeight;
       _this.createLZ();
       _this.createVS();
+
     });
 
     this.vm.$on('contentResized', function() {
@@ -112,6 +114,7 @@ module.exports = {
       _this.targetY = Math.max((_this.contentHeight - window.innerHeight) * -1, _this.targetY);
       _this.targetY = Math.min(0, _this.targetY);
 
+
       if (_this.lz.valid) {
         _this.lz.check();
       }
@@ -129,7 +132,7 @@ module.exports = {
   move: function() {
     this.moveRaf = raf(this.move.bind(this));
 
-    this.currentY += ((this.targetY - this.currentY)) * this.ease;
+    this.currentY += _.roundThreeDigits(((this.targetY - this.currentY)) * this.ease);
 
     TweenMax.set(this.content, {
       force3D: true,

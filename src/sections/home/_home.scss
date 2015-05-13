@@ -22,12 +22,12 @@
 	}
 
 
-	.post{
+	.home-post{
 		display: block;
 		margin-bottom: 55px;
 		position: relative;
 
-		&:hover{
+		/* &:hover{
 			h1{
 				.highlight:before{
 					height: 100%;
@@ -66,16 +66,16 @@
 					transition: all 0.5s $ease-cubic-in-out;
 				}
 		  }
-		}
+		} */
 
-		h2{
+		/* h2{
 			color: #fff;
 			font-size: em(16);
 			font-weight: bold;
 			text-transform: uppercase;
 			margin-top: 15px;
 			margin-left: 10px;
-		}
+		} */
 	}
 
 	.more{

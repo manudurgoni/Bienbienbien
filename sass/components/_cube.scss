@@ -248,11 +248,12 @@ $heightHeaderMobile: 35px;
 
 
 @include keyframes(showBBB) {
-  0%,10% {
+  0%,5% {
     opacity: 0;
+    display: block;
     visibility: hidden;
   }
-  90%,100%{
+  100%{
     opacity: 1;
     visibility: initial;
   }
@@ -263,7 +264,12 @@ $heightHeaderMobile: 35px;
     opacity: 1;
     visibility: initial;
   }
+  95%{
+    opacity: 0;
+    visibility: hidden;
+  }
   100%{
+    display: none;
     opacity: 0;
     visibility: hidden;
   }

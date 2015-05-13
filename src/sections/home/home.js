@@ -45,17 +45,10 @@ module.exports = {
             }
           });
 
-        this.loading.loadingCubes.classList.remove('show');
-        this.loading.loadingCubes.classList.add('hide');
       },
       leave: function(el, done) {
         var tl = new TimelineMax();
-        tl.set(this.loading.transitionShape, {
-            display: 'block',
-            xPercent: 100,
-            width: window.innerWidth
-          })
-          .to(el, 1, {
+        tl.to(el, 1, {
             autoAlpha: 0,
             y: 30,
             onComplete: function() {
@@ -65,9 +58,6 @@ module.exports = {
 
 
         this.$dispatch('menuOut');
-
-        this.loading.loadingCubes.classList.remove('hide');
-        this.loading.loadingCubes.classList.add('show');
 
         // CubeManager.showCubes(this.loading.loadingCubes, 0.4, 1, 0, 0, function() {
         //   CubeManager.rotateCubes(_this.loading.cubes, 0.7, 180, undefined, 1, 0.5, 0.1, 1);
@@ -92,7 +82,7 @@ module.exports = {
 
   ready: function() {
     var tl = new TimelineMax();
-    this.menuBtn = document.querySelector('.menu-button');
+    this.menuBtn = document.querySelector('.menu-component__bar__button');
     this.menuBtnBlackLayer = this.menuBtn.querySelector('.black');
     this.articles = this.$el.querySelectorAll('.post');
 

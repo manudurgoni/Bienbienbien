@@ -1,30 +1,12 @@
 <div class="menu-component">
-    <div class="top-bar" v-el="navbar">
-        <header class="cubes header" v-el="bbb">
-            <a href="/">
-                <div class="wrap">
-                    <div class="cube">
-                        <span class="front">B</span>
-                        <span class="back">B</span>
-                        <span class="top">B</span>
-                        <span class="bottom">B</span>
-                    </div>
-                    <div class="cube">
-                        <span class="front">B</span>
-                        <span class="back">B</span>
-                        <span class="top">B</span>
-                        <span class="bottom">B</span>
-                    </div>
-                    <div class="cube">
-                        <span class="front">B</span>
-                        <span class="back">B</span>
-                        <span class="top">B</span>
-                        <span class="bottom">B</span>
-                    </div>
-                </div>
-            </a>
-        </header>
-        <div class="menu-button" v-el="button" v-on="click:toggleMenu">
+    <div class="menu-component__bar" v-el="navbar">
+        <a href="/" class="menu-component__bar__bbb" >
+            <span>Bien</span>
+            <span>Bien</span>
+            <span>Bien</span>
+        </a>
+        
+        <div class="menu-component__bar__button" v-el="button" v-on="click:toggleMenu">
             <span></span>
             <span></span>
             <span></span>
@@ -37,7 +19,8 @@
             </div>
         </div>
     </div>
-    <div class="menu-panel" v-el="panel">
+    
+    <div class="menu-component__panel" v-el="panel">
         <nav>
             <a href="">Catégorie 1</a>
             <a href="">Catégorie 2</a>

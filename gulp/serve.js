@@ -7,12 +7,9 @@ gulp.task('serve', ['clean', 'jshint', 'styles', 'watch'], function () {
     browserSync.init(null, {
         watchTask: true,
         notify: false,
-        server: {
-          baseDir: './static/',
-          index: 'index.html'
-        }
+        proxy: 'http://bienbienbien.dev/'
     });
 
     gulp.watch('./sass/**/*.scss', ['styles']);
-    gulp.watch(['./static/build/**/*.js','./static/build/**/*.html'], reload);
+    gulp.watch(['./static/build/**/*.js','./static/build/**/*.html', './static/index.html'], reload);
 });

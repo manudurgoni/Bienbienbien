@@ -1,41 +1,77 @@
 .menu-component {
-  .top-bar {
-    width: 100%;
-    z-index: 5;
-    position: relative;
 
+  &__bar {
+    position: relative;
+    @include size(calc(100% - $slack-component-width) 75px);
+    margin-left: $slack-component-width;
+    background-color: $blue;
+    z-index: 100;
+
+    
     @include media($phablet) {
-      height: 50px;
-      background-color: #ff0000;
-      
+      @include size(100% 50px);
+      margin-left: 0;
+    }
+
+    &__bbb {
+      font-family:  $helvetica;
+      font-weight: bold;
+      color: #fff;
+      @include position(absolute, 50% null null null);
+      transform: translate(0%,-50%);
+      font-size: 0;
+
+      >span{
+        font-size: 42px;
+        display: inline-block;
+        margin-left: 20px;
+      }
     }
     
+    &__button {
+      $spacing: 25px;
+      @include position(absolute, 50% $spacing null null);
+      transform: translate(0, -50%);
+      cursor: pointer;
+      
+      >span {
+        display: block;
+        @include size(43px 5px);
+        margin-bottom: 9px;
+        background-color: #fff;
+        
+        @include media($phablet) {
+
+          @include size(35px 5px);
+          margin-bottom: 7px;
+        }
+        
+        &:nth-child(3n) {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &__panel{
+    @include position(absolute, 0 0 null null);
+    @include size(290px 100%);
+    background: #fff;
+    color: #000;
+    z-index: 0;
+    transform: translate(290px);
+    z-index: 100;
 
   }
+  
   .menu-button {
     position: absolute;
     top: 25px;
     right: 25px;
     z-index: 10;
-    cursor: pointer;
     @include media($phablet) {
       top: 10px;
       right: 15px;
-    }
-    >span {
-      display: block;
-      width: 43px;
-      height: 5px;
-      margin-bottom: 9px;
-      background-color: #fff;
-      @include media($phablet) {
-        width: 35px;
-        height: 5px;
-        margin-bottom: 7px;
-      }
-      &:nth-child(3n) {
-        margin-bottom: 0;
-      }
     }
     .black {
       position: absolute;
@@ -68,15 +104,5 @@
       }
     }
   }
-  .menu-panel {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 290px;
-    height: 100%;
-    background: #fff;
-    color: #000;
-    z-index: 0;
-    transform: translate3d(120px, 0px, 0px);
-  }
+ 
 }

@@ -7,7 +7,7 @@ html, body {
     margin: 0;
     padding: 0;
     @extend %full-size;
-    background-color: #000;
+    background-color: $yellow;
     overflow: hidden;
 }
 
@@ -44,7 +44,7 @@ ul, li {
  */
 .global{
     height: 100%;
-    margin-left: 290px;
+    margin-left: $slack-component-width;
     position: relative;
     transform: translate3d(0,0,0);
     z-index: 1;

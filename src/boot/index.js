@@ -25,16 +25,16 @@ var get_posts_url = conf.wp_url + '/api/get_posts/';
 var get_background_url = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_custom_background_infos';
 
 
-// var get_slack_posts = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
-// var get_slack_members = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
-var get_slack_posts = '/assets/data/channel.json';
-var get_slack_members = '/assets/data/members.json';
+var get_slack_posts = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
+var get_slack_members = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
+// var get_slack_posts = '/assets/data/channel.json';
+// var get_slack_members = '/assets/data/members.json';
 var datas = {};
 
 // Dom
-var transitionShape = document.querySelector('.loader');
-var loadingCubes = document.querySelector('.cubes.loading');
-var cubes = loadingCubes.querySelectorAll('.cube');
+// var transitionShape = document.querySelector('.loader');
+// var loadingCubes = document.querySelector('.cubes.loading');
+// var cubes = loadingCubes.querySelectorAll('.cube');
 
 
 
@@ -58,11 +58,6 @@ function init() {
         background: {
           background_url: datas.background_url,
           first_background_div: document.querySelector('.background-home').firstChild,
-        },
-        loading: {
-          loadingCubes: loadingCubes,
-          cubes: cubes,
-          transitionShape: transitionShape
         }
       };
     },
@@ -81,7 +76,15 @@ function init() {
         isDefault: true
       },
       '/article/:slug': {
-        componentId: 'post-section'
+        componentId: 'post-section',
+        beforeUpdate: function(path, context, next){
+          next();
+          // if(path.componentId === 'post-section'){
+          //   this.$broadcast( 'post:exit', next);
+          // }else{
+          //   next();
+          // }
+        },
       },
       '/about': {
         componentId: 'about-section'
@@ -104,7 +107,8 @@ function init() {
     },
 
     directives: {
-      'scroll': require('../directives/scroll.js')
+      'scroll': require('../directives/scroll.js'),
+      'stats': require('../directives/stats.js')
     },
 
     filters: {
@@ -155,15 +159,14 @@ function loadData() {
     var tlTransitionShape = new TimelineMax();
 
 
-    if (conf.dev) {
-      tlTransitionShape.set(loadingCubes, {
-        display: 'none'
-      }).set(transitionShape, {
+    /*if (conf.dev) {
+      loadingCubes.classList.add('hide');
+      tlTransitionShape.set(transitionShape, {
         display: 'none'
       });
     } else {
 
-      TweenMax.delayedCall(3, function() {
+      TweenMax.delayedCall(2, function() {
         loadingCubes.classList.add('hide');
       });
 
@@ -174,8 +177,11 @@ function loadData() {
       tlTransitionShape.to(transitionShape, 1.4, {
         xPercent: 100,
         ease: Expo.easeInOut,
-      }, '+=2.5');
-    }
+        onComplete:function(){
+          document.body.removeChild(transitionShape);
+        }
+      }, '+=1.6');
+    }*/
   });
 };
 

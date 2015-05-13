@@ -1,8 +1,14 @@
 <div class="section home" v-transition="appear" v-scroll=".inner" tabindex="0">
   <div class="inner">
-    <a v-repeat="posts" id="article-{{slug}}" class="post" href="/article/{{slug}}">
-      <h1><span class="highlight">{{{ title }}}</span></h1>
-      <h2>{{{ custom_fields.surtitre }}}</h2>
+    
+    <a v-repeat="posts" id="article-{{slug}}" class="home-post" href="/article/{{slug}}">
+      <div class="home-post_thumb">
+        <img v-attr="src:thumbnail_images.square.url" alt="">
+      </div>
+      <div class="home-post_content">
+        <h1>{{{ title }}}</h1>
+        <h2>{{{ custom_fields.surtitre }}}</h2>
+      </div>
     </a>
 		
     <div v-if="!allIsLoaded" class="more" v-el="moreBtn" v-on="mouseenter:moreBtnOnMouseEnter, mouseleave:moreBtnOnMouseLeave, click:moreBtnOnClick">
