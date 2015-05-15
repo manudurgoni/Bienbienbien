@@ -57,7 +57,6 @@ function init() {
         members: datas.members,
         background: {
           background_url: datas.background_url,
-          first_background_div: document.querySelector('.background-home').firstChild,
         }
       };
     },
@@ -99,6 +98,7 @@ function init() {
       /* COMPONENTs */
       'slack-component': require('../components/slack/slack'),
       'menu-component': require('../components/menu/menu'),
+      'background-component': require('../components/background/background'),
 
       /* SECTIONS */
       'home-section': require('../sections/home/home'),
@@ -108,7 +108,8 @@ function init() {
 
     directives: {
       'scroll': require('../directives/scroll.js'),
-      'stats': require('../directives/stats.js')
+      'stats': require('../directives/stats.js'),
+      'pixelate': require('../directives/pixelate.js')
     },
 
     filters: {
@@ -153,7 +154,7 @@ function loadData() {
     datas.members = response[2].data.members;
     datas.background_url = response[3].url;
 
-    createBackground();
+    // createBackground();
     init();
 
     var tlTransitionShape = new TimelineMax();

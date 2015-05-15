@@ -33,7 +33,7 @@ module.exports = {
       enter: function(el, done) {
         var tl = new TimelineMax();
 
-        tl.to(this.background.first_background_div, 0.2,{
+        /*tl.to(this.background.first_background_div, 0.2,{
             scale: 1.05,
             ease: Cubic.easeInOut,
           })
@@ -43,7 +43,7 @@ module.exports = {
             onComplete: function() {
               done();
             }
-          });
+          });*/
 
       },
       leave: function(el, done) {

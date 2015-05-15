@@ -79,7 +79,7 @@
     "page": "~1.3.7",
     "q": "^1.2.0",
     "superagent": "~0.18.1",
-    "vue": "^0.11.3",
+    "vue": "^0.11.10",
     "vue-loader-mixin": "*",
     "vue-resize-mixin": "*",
     "vue-route": "*",

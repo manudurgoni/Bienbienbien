@@ -25,6 +25,7 @@
         font-size: 42px;
         display: inline-block;
         margin-left: 20px;
+        letter-spacing: -3px;
       }
     }
     
@@ -36,8 +37,8 @@
       
       >span {
         display: block;
-        @include size(43px 5px);
-        margin-bottom: 9px;
+        @include size(30px 5px);
+        margin-bottom: 8px;
         background-color: #fff;
         
         @include media($phablet) {
