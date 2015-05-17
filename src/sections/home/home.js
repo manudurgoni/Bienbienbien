@@ -49,12 +49,12 @@ module.exports = {
       leave: function(el, done) {
         var tl = new TimelineMax();
         tl.to(el, 1, {
-            autoAlpha: 0,
-            y: 30,
-            onComplete: function() {
-              done();
-            }
-          });
+          autoAlpha: 0,
+          y: 30,
+          onComplete: function() {
+            done();
+          }
+        });
 
 
         this.$dispatch('menuOut');
@@ -116,6 +116,31 @@ module.exports = {
   methods: {
     onResize: function(event) {
       this.$emit('contentResized');
+    },
+
+    onMouseEnter: function(e) {
+
+      var thumb = e.currentTarget.querySelector('.home-post_thumb');
+      var content = e.currentTarget.querySelector('.home-post_content');
+      var pixelate = thumb.querySelector('.pixelate');
+
+      var tl = new TimelineMax();
+      tl.to(pixelate, 0.4, {
+        autoAlpha: 1,
+        ease: Expo.easeOut
+      });
+    },
+
+    onMouseLeave: function(e) {
+      var thumb = e.currentTarget.querySelector('.home-post_thumb');
+      var content = e.currentTarget.querySelector('.home-post_content');
+      var pixelate = thumb.querySelector('.pixelate');
+
+      var tl = new TimelineMax();
+      tl.to(pixelate, 0.3, {
+        autoAlpha: 0,
+        ease: Expo.easeOut
+      });
     },
 
     /**

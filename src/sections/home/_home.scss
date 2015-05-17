@@ -24,29 +24,44 @@
 
 	.home-post{
 		display: block;
-		width: 717px;
+		@include size(717px 237px);
 		margin-bottom: 15px;
 		position: relative;
 		font-size: 0;
+		overflow: hidden;
 
 		&_thumb{
-			display: inline-block;
-
-			@include size(237px 237px);
-			transition: all 0.7s $ease-cubic-in-out;
+			position: absolute;
+			top: 0;
+			left: 0;
 
 			img{
 				@include size(237px 237px);
 			}
+
+			.pixelate{
+				@include size(237px 237px);
+				position: absolute;
+				top: 0;
+				left: 0;
+				overflow: hidden;
+				opacity: 0;
+				visibility: hidden;
+				
+			}
+
+			
 		}
 
 		&_content{
 			vertical-align: top;
-			display: inline-block;
+			position: absolute;
+			top: 0;
+			right: 0;
 			@include size(480px 237px);
     	background-color: #FFF;
     	padding: 35px;
-    	transition: all 0.7s $ease-cubic-in-out;
+    	// transition: all 0.7s $ease-cubic-in-out;
 
     	h1, h2{
     		color: #000;
@@ -71,11 +86,11 @@
 
 		&:hover{
 			.home-post_thumb{
-				width: 0;
+				// width: 0;
 			}
 
 			.home-post_content{
-				width: 100%;
+				// width: 100%;
 			}
 		}
 

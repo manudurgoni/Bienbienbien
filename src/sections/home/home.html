@@ -1,9 +1,12 @@
 <div class="section home" v-transition="appear" v-scroll=".inner" tabindex="0">
   <div class="inner">
     
-    <a v-repeat="posts" id="article-{{slug}}" class="home-post" href="/article/{{slug}}">
+    <a v-on="mouseenter:onMouseEnter, mouseleave:onMouseLeave" v-repeat="posts" id="article-{{slug}}" class="home-post" href="/article/{{slug}}">
       <div class="home-post_thumb">
-        <img v-attr="src:thumbnail_images.square.url" alt="">
+        <img class="hover" v-attr="src:thumbnail_images.square.url" alt="">
+        <div class="pixelate">
+          <canvas v-pixelate="{url:thumbnail_images.square.url, size:10}"></canvas>
+        </div>
       </div>
       <div class="home-post_content">
         <h1>{{{ title }}}</h1>

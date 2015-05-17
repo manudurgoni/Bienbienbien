@@ -20,7 +20,9 @@ module.exports = {
   },
 
   data: function() {
-    return {};
+    return {
+      bgUrl:this.background.background_url
+    };
   },
 
   created: function() {

@@ -4,45 +4,43 @@ var Vue = require('vue');
 var raf = require('component-raf');
 var TweenMax = require('TweenMax');
 var CUtils = require('../utils/canvas-utils.js');
-var _this;
 
 
 module.exports = {
-  isLiteral: true,
   bind: function() {
+    var _this = this;
 
-    _this = this;
-    this.size = {
-      value: 7
-    };
 
-    Vue.nextTick(function() {
-      _this.ready();
-    });
-  },
-
-  ready: function() {
     this.ctx = this.el.getContext('2d');
     this.img = new Image();
-
-    this.ctx.mozImageSmoothingEnabled = false;
-    this.ctx.webkitImageSmoothingEnabled = false;
-    this.ctx.imageSmoothingEnabled = false;
-
     this.el.style.imageRendering = 'pixelated';
 
-
-    this.img.src = this.vm.background.background_url;
+    this.ctx.mozImageSmoothingEnabled = false;
+    this.ctx.imageSmoothingEnabled = false;
     this.img.crossOrigin = 'Anonymous';
 
     this.img.onload = function() {
-
-      _this.onResize();
-      _this.pixelate();
-
+      _this.resizeCanvas();
     };
 
-    window.addEventListener('resize', this.onResize.bind(this), false);
+    this.handlerResize = this.resizeCanvas.bind(this);
+    window.addEventListener('resize', this.handlerResize, true);
+
+  },
+
+  update: function(data) {
+    this.img.src = data.url;
+
+
+    this.size = {
+      value: data.size || 10
+    };
+
+  },
+
+  unbind: function() {
+    window.removeEventListener('resize', this.handlerResize, true);
+    this.el.remove();
   },
 
   pixelate: function() {
@@ -82,13 +80,23 @@ module.exports = {
 
   },
 
-  onResize: function() {
-    this.el.width = document.querySelector('.section').offsetWidth;
-    this.el.height = window.innerHeight - 75;
+  resizeCanvas: function() {
+    var size = {};
+    if (this.el.parentNode.offsetWidth === 0 || this.el.parentNode.offsetHeight === 0) {
+      size.w = this.el.parentNode.parentNode.offsetWidth;
+      size.h = this.el.parentNode.parentNode.offsetHeight;
+    } else {
+      size.w = this.el.parentNode.offsetWidth;
+      size.h = this.el.parentNode.offsetHeight;
+    }
+
+    this.el.width = size.w;
+    this.el.height = size.h;
 
     CUtils.drawImageProp(this.ctx, this.img);
 
-    // this.pixelate();
+    this.pixelate();
+
 
   }
 
