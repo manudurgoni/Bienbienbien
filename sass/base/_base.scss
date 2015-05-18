@@ -92,5 +92,20 @@ ul, li {
     // visibility: hidden;
     // opacity: 0;
     z-index: 10;
+
+    &.above{
+        z-index: 20;
+    }
+
+    .placeholder {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        background: #fff;
+        transform-origin: 0 0;
+    }
 }
 

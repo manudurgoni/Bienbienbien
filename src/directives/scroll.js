@@ -50,7 +50,7 @@ module.exports = {
     this.menuBtnBlackLayer = this.menuBtn.querySelector('.black');
 
     if (this.el.classList.contains('single-post')) {
-      this.cover = document.querySelector('.background-post');
+      // this.cover = document.querySelector('.background-post');
       this.contentPost = this.el.querySelector('.inner div.content');
 
       //Listen beforeonchange
@@ -67,7 +67,6 @@ module.exports = {
 
       });
     }
-
 
 
     this.vm.$on('viewContentLoaded', function() {
@@ -114,7 +113,6 @@ module.exports = {
       _this.targetY = Math.max((_this.contentHeight - window.innerHeight) * -1, _this.targetY);
       _this.targetY = Math.min(0, _this.targetY);
 
-
       if (_this.lz.valid) {
         _this.lz.check();
       }
@@ -139,7 +137,7 @@ module.exports = {
       y: this.currentY,
     });
 
-    if (this.cover !== undefined) {
+    /*if (this.cover !== undefined) {
 
 
 
@@ -160,7 +158,7 @@ module.exports = {
         force3D: true,
         y: this.currentY / 5
       });
-    }
+    }*/
 
   }
 };

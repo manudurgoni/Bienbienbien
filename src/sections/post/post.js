@@ -8,7 +8,6 @@ var Vue = require('vue');
 var CubeManager = require('../../utils/cubes-manager');
 
 var get_posts_url = 'http://wp.bienbienbien.dev/api/get_posts/';
-var _this;
 
 
 module.exports = {
@@ -30,38 +29,35 @@ module.exports = {
   },
 
   created: function() {
-    _this = this;
     this.getPost();
+
+
   },
 
   ready: function() {
+    var _this = this;
+
     var tl = new TimelineMax();
     tl.set(this.$$.inner, {
       autoAlpha: 0,
       scale: 0.99,
       y: 50
     });
-
-    // Background animation
-    this.backgroundDiv = this.$$.background.querySelector('div');
-
-    tl.set(this.backgroundDiv, {
-      autoAlpha: 0,
-      scale: 1.05,
-      backgroundImage: 'url(' + this.post.thumbnail_images.cover.url + ')'
-    }).to(this.backgroundDiv, 1, {
-      autoAlpha: 1,
-      scale: 1,
-      ease: Cubic.easeInOut
-    });
+      this.background.background_url = this.post.thumbnail_images.cover.url;
 
     setTimeout(function() {
-      _this.init();
-    }, 1000);
+      _this.showBackground();
+
+    }, 500);
+
+
+    // this.$root.$on('animation-home-ended', this.showBackground);
 
   },
 
-  beforeDestroy: function() {},
+  beforeDestroy: function() {
+    this.$root.$off();
+  },
 
   transitions: {
     appear: {
@@ -69,21 +65,17 @@ module.exports = {
         done();
       },
       leave: function(el, done) {
+        var _this = this;
+
         var tl = new TimelineMax();
         _this.$dispatch('menuOut');
 
-        console.log(el);
-
-        tl.to(el.querySelector('.background-post div'), 1, {
+        tl.to(el.querySelector('.inner'), 0.5, {
+            y: window.innerHeight/3,
             autoAlpha: 0,
-            scale: 0.95,
-            ease: Cubic.easeInOut
-          })
-          .to(el.querySelector('.inner'), 0.5, {
-            y: 200,
             ease: Cubic.easeInOut,
-            
-          }, '-=0.7')
+
+          })
           .to(el.querySelector('.title-block'), 0.6, {
             y: el.querySelector('.title-block').offsetHeight,
             autoAlpha: 0,
@@ -91,7 +83,7 @@ module.exports = {
             onComplete: function() {
               done();
             }
-          }, '-=0.7');
+          }, '-=0.4');
 
 
       }
@@ -100,7 +92,30 @@ module.exports = {
 
   methods: {
 
+    showBackground: function() {
+      var _this = this;
+      var tl = new TimelineMax();
+
+      // Background animation
+      // this.backgroundDiv = this.$$.background.querySelector('div');
+      _this.init();
+
+
+      /*tl.set(this.backgroundDiv, {
+        autoAlpha: 0,
+        scale: 1.05,
+        backgroundImage: 'url(' + this.post.thumbnail_images.cover.url + ')'
+      }).to(this.backgroundDiv, 0.6, {
+        autoAlpha: 1,
+        scale: 1,
+        ease: Cubic.easeInOut
+      });*/
+
+
+    },
+
     init: function() {
+      var _this = this;
       // console.log(_this.post.content);
       var div = document.createElement('div');
       div.innerHTML = _this.post.content;
@@ -118,6 +133,7 @@ module.exports = {
     },
 
     appendElement: function(title, subtitle, content) {
+      var _this = this;
       _this.$$.title.innerHTML = title;
       _this.$$.subtitle.innerHTML = subtitle;
       _this.$$.content.innerHTML = content;
@@ -125,14 +141,13 @@ module.exports = {
     },
 
     onResize: function(event) {
+      var _this = this;
       var width = event.width;
       var height = event.height;
 
-      _this.$$.background.style.height = height + 'px';
-
 
       var h = (!this.addHeight) ? this.$options.heightTitle : 0;
-      var paddingTop = height - this.$$.titleBlock.offsetHeight - 80 + h;
+      var paddingTop = height / 1.5 - this.$$.titleBlock.offsetHeight - 80 + h;
 
       if (paddingTop > 0) {
         this.$el.querySelector('div.inner').style.paddingTop = paddingTop + 'px';
@@ -174,6 +189,7 @@ module.exports = {
     },
 
     showContent: function() {
+      var _this = this;
       window.dispatchEvent(new Event('resize'));
 
       //el, duration, scale, y, delay, cb

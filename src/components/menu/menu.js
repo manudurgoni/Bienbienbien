@@ -10,7 +10,6 @@ var _this;
 
 module.exports = {
   inherit: true,
-  replace: true,
   template: require('./menu.html'),
 
   mixins: [resizeMixin],
@@ -20,7 +19,10 @@ module.exports = {
   },
 
   data: function() {
-    return {};
+    return {
+      categories:this.categories,
+      pages:this.pages
+    };
   },
 
   created: function() {

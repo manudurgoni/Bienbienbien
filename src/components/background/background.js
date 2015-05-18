@@ -21,7 +21,6 @@ module.exports = {
 
   data: function() {
     return {
-      bgUrl:this.background.background_url
     };
   },
 
@@ -31,8 +30,6 @@ module.exports = {
   },
 
   ready: function() {
-    //dom element
-    
   },
 
   beforeDestroy: function() {

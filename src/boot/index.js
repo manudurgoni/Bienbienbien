@@ -19,11 +19,13 @@ var forEach = require('forEach');
 var DataManager = require('../utils/data-manager');
 var CubeManager = require('../utils/cubes-manager');
 var conf = require('./conf.js');
+var Routes = require('./routes.js');
 
 // Datas
 var get_posts_url = conf.wp_url + '/api/get_posts/';
+var get_categories = conf.wp_url + '/api/get_category_index/';
+var get_pages = conf.wp_url + '/api/get_page_index/';
 var get_background_url = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_custom_background_infos';
-
 
 var get_slack_posts = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_messages_from_channel&channel_id=C024YKWRU';
 var get_slack_members = conf.wp_url + '/wp-admin/admin-ajax.php?action=get_all_members';
@@ -54,45 +56,17 @@ function init() {
         },
         posts: datas.posts,
         msgs: datas.msgs,
+        categories: datas.categories,
+        pages: datas.pages,
         members: datas.members,
         background: {
-          background_url: datas.background_url,
+          background_url: '',
+          background_home: datas.background_url,
         }
       };
     },
 
-    routes: {
-      '/': {
-        componentId: 'home-section',
-        beforeUpdate: function(path, context, next){
-
-          if(context.componentId === 'post-section'){
-            this.$broadcast( 'post:exit', next);
-          }else{
-            next();
-          }
-        },
-        isDefault: true
-      },
-      '/article/:slug': {
-        componentId: 'post-section',
-        beforeUpdate: function(path, context, next){
-          next();
-          // if(path.componentId === 'post-section'){
-          //   this.$broadcast( 'post:exit', next);
-          // }else{
-          //   next();
-          // }
-        },
-      },
-      '/about': {
-        componentId: 'about-section'
-      },
-      options: {
-        // click: true,
-        // broadcast:true
-      }
-    },
+    routes: Routes,
 
     components: {
       /* COMPONENTs */
@@ -147,12 +121,14 @@ function createBackground() {
 };
 
 function loadData() {
-  DataManager.getJsons([get_posts_url, get_slack_posts, get_slack_members, get_background_url]).then(function(response) {
+  DataManager.getJsons([get_posts_url, get_slack_posts, get_slack_members, get_background_url, get_categories, get_pages]).then(function(response) {
     datas.nbPages = response[0].pages;
     datas.posts = response[0].posts;
     datas.msgs = response[1].data.messages;
     datas.members = response[2].data.members;
     datas.background_url = response[3].url;
+    datas.categories = response[4].categories;
+    datas.pages = response[5].pages;
 
     // createBackground();
     init();

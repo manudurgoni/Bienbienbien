@@ -31,7 +31,6 @@ module.exports = {
   update: function(data) {
     this.img.src = data.url;
 
-
     this.size = {
       value: data.size || 10
     };

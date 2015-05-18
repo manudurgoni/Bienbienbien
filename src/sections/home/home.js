@@ -6,6 +6,7 @@ var CubeManager = require('../../utils/cubes-manager');
 var resizeMixin = require('vue-resize-mixin');
 var conf = require('../../boot/conf.js');
 var forEach = require('forEach');
+var getViewport = require('../../utils/viewport.js');
 
 var get_posts_url = conf.wp_url + '/api/get_posts/';
 
@@ -33,7 +34,7 @@ module.exports = {
       enter: function(el, done) {
         var tl = new TimelineMax();
 
-        /*tl.to(this.background.first_background_div, 0.2,{
+  /*      tl.to(this.background.first_background_div, 0.2,{
             scale: 1.05,
             ease: Cubic.easeInOut,
           })
@@ -44,17 +45,91 @@ module.exports = {
               done();
             }
           });*/
+          done();
 
       },
       leave: function(el, done) {
+        var _this = this;
         var tl = new TimelineMax();
-        tl.to(el, 1, {
-          autoAlpha: 0,
-          y: 30,
-          onComplete: function() {
+
+        el.classList.add('glitch');
+
+        tl.to(el, 0.1,{
+          autoAlpha:0,
+          ease:Expo.easeOut,
+          onComplete:function(){
+            // _this.$dispatch( 'animation-home-ended');
             done();
           }
-        });
+        },'+=0.2');
+
+
+        // if (item !== null) {
+
+        //   var thumb = item.querySelector('.home-post_thumb');
+        //   var content = item.querySelector('.home-post_content');
+
+        //   var fakeDiv = document.createElement('div');
+        //   fakeDiv.className = 'placeholder';
+        //   // this.$el.appendChild(fakeDiv);
+        //   // 
+          
+
+        //   var scrollY = this.$data.targetY || 0;
+
+
+
+        //   tl.set(fakeDiv, {
+        //       force3D: true,
+        //       x: item.offsetLeft,
+        //       y: item.offsetTop + scrollY,
+        //       scaleX: item.offsetWidth / this.$el.offsetWidth,
+        //       scaleY: item.offsetHeight / getViewport('y')
+        //     })
+        //     .to(content, 0.6, {
+        //       width: '100%',
+        //       ease: Cubic.easeOut
+        //     })
+        //     .staggerTo([content.querySelector('h1'), content.querySelector('h2')], 0.6, {
+        //         y: -20,
+        //         autoAlpha: 0,
+        //         ease: Cubic.easeOut
+        //       }, 0.14, '+=0.1',
+        //       function() {
+        //         _this.$el.appendChild(fakeDiv);
+        //         _this.$dispatch( 'animation-home-ended');
+
+        //       })
+        
+        //     .set(el.querySelector('.inner'), {
+        //       autoAlpha:0
+        //     })
+        //     .to(fakeDiv, 0.5, {
+        //       autoAlpha:0,
+        //       ease: Expo.easeOut,
+        //       onComplete: function(){
+        //         done();
+        //       }
+        //     },'+=0.5');
+
+        //   // done();
+        // } else {
+        //   tl.to(el, 1, {
+        //     autoAlpha: 0,
+        //     y: 30,
+        //     onComplete: function() {
+        //       // tl.to(el, 1, {
+        //       //   autoAlpha: 0,
+        //       //   y: 30,
+        //       //   onComplete: function() {
+        //       //     done();
+        //       //   }
+        //       // });
+        //     }
+        //   });
+        // }
+
+
 
 
         this.$dispatch('menuOut');
@@ -72,6 +147,7 @@ module.exports = {
     _this = this;
 
     //Background vars
+    this.background.background_url = this.background.background_home;
     this.tlBackground = new TimelineMax();
     this.timeoutBg = null;
 
@@ -84,7 +160,7 @@ module.exports = {
     var tl = new TimelineMax();
     this.menuBtn = document.querySelector('.menu-component__bar__button');
     this.menuBtnBlackLayer = this.menuBtn.querySelector('.black');
-    this.articles = this.$el.querySelectorAll('.post');
+    this.articles = this.$el.querySelectorAll('.home-post');
 
     if (!this.allIsLoaded) {
       this.initTimelineMoreBtn();
@@ -111,11 +187,18 @@ module.exports = {
 
   },
 
-  beforeDestroy: function() {},
+  beforeDestroy: function() {
+  },
 
   methods: {
     onResize: function(event) {
       this.$emit('contentResized');
+    },
+
+    onClick: function(e) {
+      var _this = this;
+      var item = e.currentTarget;
+      item.classList.add('selected');
     },
 
     onMouseEnter: function(e) {
@@ -125,8 +208,8 @@ module.exports = {
       var pixelate = thumb.querySelector('.pixelate');
 
       var tl = new TimelineMax();
-      tl.to(pixelate, 0.4, {
-        autoAlpha: 1,
+      tl.to(pixelate, 0.3, {
+        autoAlpha: 0.8,
         ease: Expo.easeOut
       });
     },

@@ -37,13 +37,13 @@
       
       >span {
         display: block;
-        @include size(30px 5px);
+        @include size(30px 4px);
         margin-bottom: 8px;
         background-color: #fff;
         
         @include media($phablet) {
 
-          @include size(35px 5px);
+          @include size(35px 4px);
           margin-bottom: 7px;
         }
         
@@ -57,11 +57,60 @@
   &__panel{
     @include position(absolute, 0 0 null null);
     @include size(290px 100%);
-    background: #fff;
+    background: #ffff55;
     color: #000;
     z-index: 0;
     transform: translate(290px);
     z-index: 100;
+
+    &__svg{
+      @include position(absolute, 0 0 null null);
+      @include size(290px 100%);
+    }
+
+    &__nav{
+      position: relative;
+      padding: 30px 20px;
+
+      &.categories{
+        a{
+          font-family: Arial;
+          font-weight: bold;
+          font-size: 30px;
+          color: #000;
+          display: block;
+          padding: 15px 20px;
+          margin-bottom: 2px;
+
+          &.current, &:hover{
+            background-color: #fff;
+            color: $salmon;
+          }
+        }
+      }
+
+      &.search-archives{
+        padding: 10px 0px;
+        margin: 0px 20px;
+        background-color: $salmon;
+
+        a{
+          font-family: Arial;
+          font-weight: bold;
+          font-size: 30px;
+          color: #fff;
+          display: block;
+          padding: 15px 10px;
+          margin: 0px 10px;
+          margin-bottom: 2px;
+
+          &.current, &:hover{
+            background-color: #fff;
+            color: #000;
+          }
+        }
+      }
+    }
 
   }
   

@@ -1,11 +1,10 @@
 <div class="menu-component">
     <div class="menu-component__bar" v-el="navbar">
-        <a href="/" class="menu-component__bar__bbb" >
+        <a href="/" class="menu-component__bar__bbb">
             <span>Bien</span>
             <span>Bien</span>
             <span>Bien</span>
         </a>
-        
         <div class="menu-component__bar__button" v-el="button" v-on="click:toggleMenu">
             <span></span>
             <span></span>
@@ -19,14 +18,27 @@
             </div>
         </div>
     </div>
-    
     <div class="menu-component__panel" v-el="panel">
-        <nav>
-            <a href="">Catégorie 1</a>
-            <a href="">Catégorie 2</a>
-            <a href="">Catégorie 3</a>
-            <a href="">Catégorie 4</a>
-            <a href="">Catégorie 5</a>
+        <svg class="menu-component__panel__svg">
+            <defs>
+                <pattern id="mgyim" patternUnits="userSpaceOnUse" width="4" height="4">
+                    <rect width="1" height="1" x="0" y="3" fill="#ff5555" stroke-width="0" />
+                    <rect width="1" height="1" x="2" y="1" fill="#ff5555" stroke-width="0" />
+                </pattern>
+            </defs>
+            <rect x="0" y="0" display="inline" fill="url(#mgyim)" width="100%" height="100%"/>
+        </svg>
+        <nav class="menu-component__panel__nav categories">
+            <a v-repeat="categories" id="categorie-{{slug}}" href="/categories/{{slug}}">{{{ title }}}</a>
+        </nav>
+
+        <nav class="menu-component__panel__nav search-archives">
+            <a href="/recherche">Recherche</a>
+            <a href="/archives">Archives</a>
+        </nav>
+
+        <nav class="menu-component__panel__nav links">
+            <a v-repeat="pages" id="page-{{slug}}" href="/{{slug}}">{{{ title }}}</a>
         </nav>
     </div>
 </div>
