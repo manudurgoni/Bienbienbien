@@ -87,7 +87,8 @@ function init() {
     },
 
     filters: {
-      'formatTimestamp': require('../filters/formatTimestamp/formatTimestamp')
+      'formatTimestamp': require('../filters/formatTimestamp/formatTimestamp'),
+      'formatDate': require('../filters/formatDate/formatDate')
     },
 
     created: function() {},

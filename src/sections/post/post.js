@@ -6,8 +6,7 @@ var resizeMixin = require('vue-resize-mixin');
 var forEach = require('forEach');
 var Vue = require('vue');
 var CubeManager = require('../../utils/cubes-manager');
-
-var get_posts_url = 'http://wp.bienbienbien.dev/api/get_posts/';
+var conf = require('../../boot/conf.js');
 
 
 module.exports = {
@@ -35,20 +34,7 @@ module.exports = {
   },
 
   ready: function() {
-    var _this = this;
 
-    var tl = new TimelineMax();
-    tl.set(this.$$.inner, {
-      autoAlpha: 0,
-      scale: 0.99,
-      y: 50
-    });
-      this.background.background_url = this.post.thumbnail_images.cover.url;
-
-    setTimeout(function() {
-      _this.showBackground();
-
-    }, 500);
 
 
     // this.$root.$on('animation-home-ended', this.showBackground);
@@ -71,7 +57,7 @@ module.exports = {
         _this.$dispatch('menuOut');
 
         tl.to(el.querySelector('.inner'), 0.5, {
-            y: window.innerHeight/3,
+            y: window.innerHeight / 3,
             autoAlpha: 0,
             ease: Cubic.easeInOut,
 
@@ -91,6 +77,24 @@ module.exports = {
   },
 
   methods: {
+
+    postIsLoaded: function() {
+      var _this = this;
+
+      var tl = new TimelineMax();
+      tl.set(this.$$.inner, {
+        autoAlpha: 0,
+        scale: 0.99,
+        y: 50
+      });
+      this.background.background_url = this.post.thumbnail_images.cover.url;
+
+      setTimeout(function() {
+        _this.showBackground();
+
+      }, 500);
+    },
+
 
     showBackground: function() {
       var _this = this;
@@ -128,7 +132,11 @@ module.exports = {
         _this.showContent();
       }
 
+      // _this.showContent();
 
+      window.addEventListener('load', function() {
+        console.log('load');
+      }, true)
 
     },
 
@@ -175,12 +183,14 @@ module.exports = {
         tempIframe.addEventListener('load', function() {
           i++;
 
+          console.log(i / iframes.length * 100 + '%');
+
           if (i === iframes.length) {
 
-            setTimeout(function() {
+            setTimeout(function(){
               self.showContent();
+            },500)
 
-            }, 500);
           }
         }, true);
 
@@ -201,15 +211,13 @@ module.exports = {
           height: '+=' + _this.$options.heightTitle,
           y: _this.$options.heightTitle
         })
-        .to(this.$$.inner, 1, {
+        .to(this.$$.inner, 0.7, {
           autoAlpha: 1,
           scale: 1,
           y: 0,
-          delay: 1.5,
-
-          // ease: Cubic.easeOut
+          delay: 0.9,
         })
-        .to(this.$$.titleBlock, 1.2, {
+        .to(this.$$.titleBlock, 1, {
           height: '-=' + _this.$options.heightTitle,
           y: 0,
           clearProps: 'height',
@@ -219,7 +227,7 @@ module.exports = {
             _this.$emit('viewContentLoaded');
 
           }
-        }, '-=1');
+        },'-=0.5');
     },
 
 
@@ -229,11 +237,21 @@ module.exports = {
      * @return {[type]} [description]
      */
     getPost: function() {
+      var _this = this;
+      var url = conf.wp_url + '/api/get_post/?slug=' + this.$data.$routeParams.slug;
+      DataManager.getJsons([url]).then(function(response) {
+        _this.post = response[0].post;
+        console.log(response[0].post)
+        _this.postIsLoaded();
+      });
+    },
 
-      if (this.posts) {
-        this.post = this.posts.filter(this.filterBySlug)[0];
+    getNextPost: function() {
 
-      }
+    },
+
+    getPrevPost: function() {
+
     },
 
     filterBySlug: function(element) {

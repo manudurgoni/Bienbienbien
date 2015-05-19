@@ -30,7 +30,8 @@
     "fit": "./node_modules/fit/fit.min.js",
     "forEach": "./node_modules/foreach.js/dist/foreach.min.js",
     "preloadjs": "./node_modules/preloadjs/lib/preloadjs-0.6.0.min.js",
-    "TweenMax": "./node_modules/greensock/src/minified/TweenMax.min.js"
+    "TweenMax": "./node_modules/greensock/src/minified/TweenMax.min.js",
+    "moment": "./node_modules/moment/min/moment-with-locales.min.js"
   },
   "browserify-shim": {
     "fit": "fit",

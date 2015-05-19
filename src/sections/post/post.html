@@ -1,13 +1,22 @@
 <div class="section single-post" v-transition="appear" v-scroll=".inner" tabindex="-1">
-	<div class="inner" v-el="inner">
-	  <div class="title-block" v-el="titleBlock">
-	    <h1 v-el="title"></h1>
-	    <h2 v-el="subtitle"></h2>
-	  </div>
+    <div class="inner" v-el="inner">
+        <div class="title-block" v-el="titleBlock">
+            <h1 v-el="title"></h1>
+            <h2 v-el="subtitle"></h2>
+        </div>
+        <div class="content" v-el="wrapperContent">
+						
+						<div class="infos" v-if="post">
+							<p class="date">{{ post.date | formatDate }}</p>
+							<p class="author">Par {{ post.author.nickname }}</p>
+						</div>
 
-	  <div class="content" v-el="wrapperContent"><div v-el="content"></div>
+            <div v-el="content"></div>
 
-			<a href="/article/bonjour-tout-le-monde">Article test</a>
-	  </div>
-	</div>
+            <div class="relance" v-if="post">
+                <a v-if="post.next != 0" href="/article/{{post.next.slug}}" class="next-post">{{{ post.next.title }}}</a>
+                <a v-if="post.previous != 0" href="/article/{{post.previous.slug}}" class="previous-post">{{{ post.previous.title }}}</a>
+            </div>
+        </div>
+    </div>
 </div>
